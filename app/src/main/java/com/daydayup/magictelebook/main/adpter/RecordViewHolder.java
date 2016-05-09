@@ -1,4 +1,4 @@
-package com.daydayup.magictelebook.main.view;
+package com.daydayup.magictelebook.main.adpter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

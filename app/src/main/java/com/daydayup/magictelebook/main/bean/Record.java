@@ -1,4 +1,4 @@
-package com.daydayup.magictelebook.main.view;
+package com.daydayup.magictelebook.main.bean;
 
 /**
  * Created by Jallen on 2016/5/8.

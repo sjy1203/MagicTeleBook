@@ -1,4 +1,4 @@
-package com.daydayup.magictelebook.main.view;
+package com.daydayup.magictelebook.main.adpter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.daydayup.magictelebook.R;
+import com.daydayup.magictelebook.main.bean.Record;
 import com.daydayup.magictelebook.util.L;
 
 import java.util.List;

@@ -28,7 +28,6 @@ public class RecordsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_records, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        //recyclerView.setAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         return view;
     }
