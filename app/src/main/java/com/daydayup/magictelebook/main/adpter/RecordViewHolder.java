@@ -13,6 +13,7 @@ import com.daydayup.magictelebook.R;
 public class RecordViewHolder extends RecyclerView.ViewHolder {
 
     TextView NameView;
+    ImageView PersonImgView;
     TextView TelnoView;
     ImageView TypeImgView;
     TextView TypeView;
@@ -24,6 +25,7 @@ public class RecordViewHolder extends RecyclerView.ViewHolder {
     public RecordViewHolder(View itemView) {
         super(itemView);
         NameView = (TextView) itemView.findViewById(R.id.person_name);
+        PersonImgView = (ImageView) itemView.findViewById(R.id.person_img);
         TelnoView = (TextView) itemView.findViewById(R.id.person_telno);
         TypeImgView = (ImageView) itemView.findViewById(R.id.contact_type_img);
         TypeView = (TextView) itemView.findViewById(R.id.contact_type);

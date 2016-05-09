@@ -50,8 +50,8 @@ public class RecordsFragment extends Fragment {
         L.d("initRecords");
         Record[] record = new Record[10];
         for(int i = 0;i < 10; i++){
-            record[i] = new Record("尚骏远","18986311211","来电","湖北武汉","16/05/08",
-                    R.mipmap.contact_type, R.mipmap.contact_area, R.mipmap.contact_time);
+            record[i] = new Record("尚骏远","18986311211","来电","湖北武汉","16/05/08 12:12",
+                    R.mipmap.contact_type, R.mipmap.contact_area, R.mipmap.contact_time,R.mipmap.touxiang);
             mRecords.add(record[i]);
         }
     }

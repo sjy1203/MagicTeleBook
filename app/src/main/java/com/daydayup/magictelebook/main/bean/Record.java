@@ -5,6 +5,7 @@ package com.daydayup.magictelebook.main.bean;
  */
 public class Record {
     private String Name;
+    private int PersonImgId;
     private String Telno;
     private int TypeImgId;
     private String Type;
@@ -14,7 +15,7 @@ public class Record {
     private String Time;
 
     public Record(String Name,String Telno,String Type,String Area,String Time,
-                  int TypeImgId,int AreaImgId,int TimeImgId){
+                  int TypeImgId,int AreaImgId,int TimeImgId,int PersonImgId){
         this.Name = Name;
         this.Telno = Telno;
         this.Type = Type;
@@ -23,6 +24,7 @@ public class Record {
         this.TypeImgId = TypeImgId;
         this.AreaImgId = AreaImgId;
         this.TimeImgId = TimeImgId;
+        this.PersonImgId = PersonImgId;
     }
 
     public String getArea() {
@@ -55,5 +57,9 @@ public class Record {
 
     public int getTypeImgId() {
         return TypeImgId;
+    }
+
+    public int getPersonImgId() {
+        return PersonImgId;
     }
 }
