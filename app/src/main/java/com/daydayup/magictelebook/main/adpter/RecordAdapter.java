@@ -32,12 +32,10 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
     public void onBindViewHolder(RecordViewHolder holder, int position) {
         L.d("onBindView name"+records.get(position).getName());
         holder.NameView.setText(records.get(position).getName());
+        holder.PersonImgView.setImageResource(records.get(position).getPersonImgId());
         holder.TelnoView.setText(records.get(position).getTelno());
-        holder.TypeImgView.setImageResource(records.get(position).getTypeImgId());
         holder.TypeView.setText(records.get(position).getType());
-        holder.AreaImgView.setImageResource(records.get(position).getAreaImgId());
         holder.AreaView.setText(records.get(position).getArea());
-        holder.TimeImgView.setImageResource(records.get(position).getTimeImgId());
         holder.TimeView.setText(records.get(position).getTime());
     }
 
