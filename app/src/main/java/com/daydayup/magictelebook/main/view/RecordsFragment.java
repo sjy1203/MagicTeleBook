@@ -27,6 +27,7 @@ public class RecordsFragment extends Fragment {
     private List<Record> mRecords = new ArrayList<>();
     private RecordAdapter mAapter;
 
+
     public RecordsFragment() {
         // Required empty public constructor
     }
@@ -46,14 +47,24 @@ public class RecordsFragment extends Fragment {
         return view;
     }
 
+    /*
+     * 初始化通话记录数据
+     */
     public void initRecords() {
         L.d("initRecords");
+        initFirstRecords();
         Record[] record = new Record[10];
         for(int i = 0;i < 10; i++){
-            record[i] = new Record("尚骏远","18986311211","来电","湖北武汉","16/05/08 12:12",
-                    R.mipmap.contact_type, R.mipmap.contact_area, R.mipmap.contact_time,R.mipmap.touxiang);
+            record[i] = new Record("尚骏远","18986311211","来电","湖北武汉","16/05/08", R.mipmap.touxiang);
             mRecords.add(record[i]);
         }
+    }
+
+    /*
+     *初始化最近的一条记录
+     */
+    private void initFirstRecords() {
+
     }
 
 }
