@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Record;
+import com.daydayup.magictelebook.main.view.IRecordViewHolderClicks;
 import com.daydayup.magictelebook.util.L;
+import com.daydayup.magictelebook.util.T;
 
 import java.util.List;
 
@@ -18,8 +20,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
 
     private final static int FIRSTITEM = 0;
     private final static int SECONDITEM = 1;
-    private final static int OTHERITEM =2;
-    private final static int LASTITEM =3;
+    private final static int LASTITEM = 999;
     private List<Record> records;
 
     public RecordAdapter(List<Record> list){
@@ -35,23 +36,61 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
             return SECONDITEM;
         }else if(position == records.size()-1){
             return LASTITEM;
-        }else return OTHERITEM;
+        }else return position;
     }
 
     @Override
-    public RecordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecordViewHolder onCreateViewHolder(ViewGroup parent,final int viewType) {
         if (viewType == FIRSTITEM){
-            View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_first,parent,false);
-            return new RecordViewHolder(view1);
+            final View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_first,parent,false);
+            return new RecordViewHolder(view1, new IRecordViewHolderClicks() {
+                @Override
+                public void onItemClick() {
+                    L.d(records.get(viewType).getName()+" is clicked");
+                }
+
+                @Override
+                public void onCallBtnClick() {
+                    L.d(records.get(viewType).getTelno()+" is called");
+                }
+            });
         }else if(viewType == SECONDITEM){
             View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_second,parent,false);
-            return new RecordViewHolder(view2);
+            return new RecordViewHolder(view2, new IRecordViewHolderClicks() {
+                @Override
+                public void onItemClick() {
+                    L.d(records.get(viewType).getName()+" is clicked");
+                }
+
+                @Override
+                public void onCallBtnClick() {
+                    L.d(records.get(viewType).getTelno()+" is called");
+                }
+            });
         }else if(viewType == LASTITEM){
-            View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_last,parent,false);
-            return new RecordViewHolder(view3);
+            final View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_last,parent,false);
+            return new RecordViewHolder(view3, new IRecordViewHolderClicks() {
+                @Override
+                public void onItemClick() {
+                }
+
+                @Override
+                public void onCallBtnClick() {
+                }
+            });
         }else{
             View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item,parent,false);
-            return new RecordViewHolder(view4);
+            return new RecordViewHolder(view4, new IRecordViewHolderClicks() {
+                @Override
+                public void onItemClick() {
+                    L.d(records.get(viewType).getName()+" is clicked");
+                }
+
+                @Override
+                public void onCallBtnClick() {
+                    L.d(records.get(viewType).getTelno()+" is called");
+                }
+            });
         }
     }
 

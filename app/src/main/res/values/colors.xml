@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="tabbackground">#039be5</color>
     <color name="tabTextColor">#ffffff</color>
-    <color name="tabTextSelectedColor">#bdbdbd</color>
+    <color name="tabTextSelectedColor">#DCDCDC</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 </resources>

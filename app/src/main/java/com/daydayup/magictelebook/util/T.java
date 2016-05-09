@@ -32,7 +32,7 @@ public class T
 
 	/**
 	 * 短时间显示Toast
-	 * 
+	 *
 	 * @param context
 	 * @param message
 	 */

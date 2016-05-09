@@ -52,7 +52,6 @@ public class RecordsFragment extends Fragment {
      */
     public void initRecords() {
         L.d("initRecords");
-        initFirstRecords();
         Record[] record = new Record[10];
         for(int i = 0;i < 9; i = i + 3){
             record[i] = new Record("尚骏远","18986311211","来电","湖北武汉","16/05/08", R.mipmap.touxiang);
