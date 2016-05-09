@@ -15,8 +15,8 @@
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/person_img"
             android:src="@mipmap/touxiang"
             android:layout_marginLeft="5dp"
@@ -24,94 +24,51 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="36dp"
             android:id="@+id/person_name"
             android:text="姓名"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textColor="@color/black"
             android:gravity="bottom"
             android:layout_toEndOf="@id/person_img"
             android:layout_toRightOf="@id/person_img"
             android:layout_marginLeft="10dp"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:id="@+id/person_telno"
-            android:text="13355558888"
-            android:textSize="16sp"
-            android:gravity="bottom"
-            android:layout_toEndOf="@id/person_name"
-            android:layout_toRightOf="@id/person_name"
-            android:layout_marginLeft="5dp"
-            />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/contact_type_img"
-            android:layout_below="@+id/person_name"
-            android:layout_toEndOf="@+id/person_img"
-            android:layout_toRightOf="@+id/person_img"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/contact_type"
-            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:id="@+id/contact_type"
-            android:text="来电"
-            android:textSize="16sp"
+            android:text="来电,"
+            android:textSize="15sp"
             android:layout_below="@+id/person_name"
-            android:layout_toEndOf="@+id/contact_type_img"
-            android:layout_toRightOf="@+id/contact_type_img"
-            android:layout_marginLeft="1dp"
+            android:layout_toEndOf="@+id/person_img"
+            android:layout_toRightOf="@+id/person_img"
+            android:layout_marginLeft="10dp"
             android:gravity="center"
             />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/contact_area_img"
-            android:layout_below="@+id/person_name"
-            android:layout_toEndOf="@+id/contact_type"
-            android:layout_toRightOf="@+id/contact_type"
-            android:layout_marginLeft="5dp"
-            android:src="@mipmap/contact_area"
-            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:id="@+id/contact_area"
-            android:text="四川遂宁"
-            android:textSize="16sp"
+            android:text="四川遂宁,"
+            android:textSize="15sp"
             android:layout_below="@id/person_name"
-            android:layout_toEndOf="@+id/contact_area_img"
-            android:layout_toRightOf="@+id/contact_area_img"
-            android:layout_marginLeft="1dp"
+            android:layout_toEndOf="@+id/contact_type"
+            android:layout_toRightOf="@+id/contact_type"
             android:gravity="center"
             />
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/contact_time_img"
-            android:layout_below="@+id/person_name"
-            android:layout_toEndOf="@+id/contact_area"
-            android:layout_toRightOf="@+id/contact_area"
-            android:layout_marginLeft="5dp"
-            android:src="@mipmap/contact_time"
-            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:id="@+id/contact_time"
             android:text="16/5/6星期五"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:layout_below="@id/person_name"
-            android:layout_toEndOf="@+id/contact_time_img"
-            android:layout_toRightOf="@+id/contact_time_img"
-            android:layout_marginLeft="1dp"
+            android:layout_toEndOf="@+id/contact_area"
+            android:layout_toRightOf="@+id/contact_area"
             android:gravity="center"
             />
 
