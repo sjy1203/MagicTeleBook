@@ -10,11 +10,13 @@ import android.os.Bundle;
 
 import com.daydayup.magictelebook.BaseAcitivity;
 import com.daydayup.magictelebook.R;
+import com.daydayup.magictelebook.main.adpter.ContactAdapter;
+import com.daydayup.magictelebook.main.adpter.RecordAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseAcitivity {
+public class MainActivity extends BaseAcitivity implements IMainView{
     //view
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -46,6 +48,17 @@ public class MainActivity extends BaseAcitivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    //TODO:@yanhangyu
+    @Override
+    public RecordAdapter getRecordAdapter() {
+        return null;
+    }
+    //TODO:@yanhangyu
+    @Override
+    public ContactAdapter getContactAdapter() {
+        return null;
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter{

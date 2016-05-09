@@ -109,4 +109,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
     public int getItemCount() {
         return records.size();
     }
+
+    public List<Record> getList(){
+        return records;
+    }
 }
