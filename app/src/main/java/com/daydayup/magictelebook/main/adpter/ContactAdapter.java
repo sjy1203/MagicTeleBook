@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Contact;
+import com.daydayup.magictelebook.main.callback.IContactViewHolderClicks;
+import com.daydayup.magictelebook.util.L;
 
 import java.util.List;
 
@@ -25,9 +27,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     }
 
     @Override
-    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public ContactViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item,parent,false);
-        return new ContactViewHolder(view);
+        return new ContactViewHolder(view, new IContactViewHolderClicks() {
+            @Override
+            public void onItemClick() {
+                L.d(contacts.get(viewType).getName()+" cardview is clicked");
+            }
+        });
     }
 
     @Override
