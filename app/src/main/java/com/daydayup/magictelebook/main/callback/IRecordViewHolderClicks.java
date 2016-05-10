@@ -1,4 +1,4 @@
-package com.daydayup.magictelebook.main.view;
+package com.daydayup.magictelebook.main.callback;
 
 /**
  * Created by Jallen on 2016/5/9.

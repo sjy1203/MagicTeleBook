@@ -7,12 +7,16 @@ public class Contact {
     private String _ID;//contact_id
     private String Name;//姓名
     private String Telno;//电话号码
+    private String Area;//地理位置
+    private String Weather;//天气状况
     private int PersonImgId;// 用户缩略图(默认值)
 
-    public Contact(String _ID,String Name,String Telno,int PersonImgId){
+    public Contact(String _ID,String Name,String Telno,String Area,String Weather,int PersonImgId){
         this._ID = _ID;
         this.Name = Name;
         this.Telno = Telno;
+        this.Area = Area;
+        this.Weather = Weather;
         this.PersonImgId = PersonImgId;
     }
 
@@ -38,6 +42,22 @@ public class Contact {
 
     public void setTelno(String telno) {
         Telno = telno;
+    }
+
+    public String getArea() {
+        return Area;
+    }
+
+    public void setArea(String area) {
+        Area = area;
+    }
+
+    public String getWeather() {
+        return Weather;
+    }
+
+    public void setWeather(String weather) {
+        Weather = weather;
     }
 
     public int getPersonImgId() {

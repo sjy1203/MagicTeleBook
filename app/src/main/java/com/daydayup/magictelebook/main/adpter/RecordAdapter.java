@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Record;
-import com.daydayup.magictelebook.main.view.IRecordViewHolderClicks;
+import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicks;
 import com.daydayup.magictelebook.util.L;
-import com.daydayup.magictelebook.util.T;
 
 import java.util.List;
 
@@ -23,9 +22,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
     private final static int LASTITEM = 999;
     private List<Record> records;
 
-    public RecordAdapter(List<Record> list){
-        L.d("list size"+list.size());
-        records = list;
+    public RecordAdapter(List<Record> recordList){
+        L.d("list size"+recordList.size());
+        records = recordList;
     }
 
     @Override

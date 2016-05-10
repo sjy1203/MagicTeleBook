@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daydayup.magictelebook.R;
-import com.daydayup.magictelebook.main.view.IRecordViewHolderClicks;
+import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicks;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Jallen on 2016/5/8.
@@ -16,7 +18,7 @@ import com.daydayup.magictelebook.main.view.IRecordViewHolderClicks;
 public class RecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     TextView NameView;
-    ImageView PersonImgView;
+    CircleImageView  PersonImgView;
     //TextView TelnoView;
     TextView TypeView;
     TextView AreaView;
@@ -29,12 +31,12 @@ public class RecordViewHolder extends RecyclerView.ViewHolder implements View.On
     public RecordViewHolder(View itemView,IRecordViewHolderClicks listener) {
         super(itemView);
         NameView = (TextView) itemView.findViewById(R.id.person_name);
-        PersonImgView = (ImageView) itemView.findViewById(R.id.person_img);
+        PersonImgView = (CircleImageView) itemView.findViewById(R.id.person_img);
         //TelnoView = (TextView) itemView.findViewById(R.id.person_telno);
         TypeView = (TextView) itemView.findViewById(R.id.contact_type);
         AreaView = (TextView) itemView.findViewById(R.id.contact_area);
         TimeView = (TextView) itemView.findViewById(R.id.contact_time);
-        cardView = (CardView) itemView.findViewById(R.id.card_view);
+        cardView = (CardView) itemView.findViewById(R.id.record_card_view);
         CallBtn = (ImageButton) itemView.findViewById(R.id.call_btn);
         mListener = listener;
         cardView.setOnClickListener(this);
@@ -44,7 +46,7 @@ public class RecordViewHolder extends RecyclerView.ViewHolder implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.card_view:
+            case R.id.record_card_view:
                 mListener.onItemClick();
                 break;
             case R.id.call_btn:
