@@ -78,6 +78,9 @@ public class RecordsFragment extends Fragment {
         mRecords.add(record[3]);
         mRecords.add(record[4]);
         mRecords.add(record[5]);
+
+        //Record record1 = new Record("","","","","","",R.mipmap.ic_launcher);
+        //mRecords.add(record1);
     }
 
 }

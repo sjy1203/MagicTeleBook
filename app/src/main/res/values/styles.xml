@@ -18,4 +18,9 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/showpw</item>
+        <item name="android:windowExitAnimation">@anim/hiddenpw</item>
+    </style>
+
 </resources>
