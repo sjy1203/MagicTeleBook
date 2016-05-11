@@ -168,14 +168,20 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         // 设置好参数之后再show
         int xoff = view.getWidth() - popupWindow.getContentView().getMeasuredWidth() - 10;
         int yoff1 = - 4*view.getHeight()/5;
-        int yoff2 = - view.getHeight()/3;
+        int yoff2 = - 3*view.getHeight()/5;
         int yoff3 =  - 8*view.getHeight()/9;
-        L.d(view.getHeight()+""+yoff2);
 
-        if ((viewType == FIRSTITEM) && (viewType == SECONDITEM)){
-            popupWindow.showAsDropDown(view,xoff-10,yoff2);
-        } else if(viewType == LASTITEM){
-            popupWindow.showAsDropDown(view,xoff-10,yoff3);
-        }else popupWindow.showAsDropDown(view,xoff,yoff1);
+        switch (viewType){
+            case FIRSTITEM:
+            case SECONDITEM:
+                popupWindow.showAsDropDown(view,xoff-10,yoff2);
+                break;
+            case LASTITEM:
+                popupWindow.showAsDropDown(view,xoff-10,yoff3);
+                break;
+            default:
+                popupWindow.showAsDropDown(view,xoff,yoff1);
+                break;
+        }
     }
 }
