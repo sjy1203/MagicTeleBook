@@ -1,15 +1,18 @@
 package com.daydayup.magictelebook.main.view;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.adpter.ContactAdapter;
@@ -39,7 +42,7 @@ public class ContactsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         initContacts();
-        mAdapter = new ContactAdapter(mContacts);
+        mAdapter = new ContactAdapter(mContacts,getScreenWidth(getActivity()));
         recyclerView = (RecyclerView) view.findViewById(R.id.contacts_recyclerView);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
@@ -86,4 +89,10 @@ public class ContactsFragment extends Fragment {
         mContacts.add(contacttest);
     }
 
+    public static int getScreenWidth(Context context) {
+        WindowManager manager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        return display.getWidth();
+    }
 }

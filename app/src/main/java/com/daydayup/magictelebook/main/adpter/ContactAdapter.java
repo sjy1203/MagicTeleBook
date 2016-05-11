@@ -18,9 +18,11 @@ import java.util.List;
 //TODO:@yanhangyu
 public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     private List<Contact> contacts;
+    private int setWidth;
 
-    public ContactAdapter(List<Contact> contactList){
+    public ContactAdapter(List<Contact> contactList,int setWidth){
         this.contacts = contactList;
+        this.setWidth = setWidth;
     }
     public List<Contact> getList(){
         return contacts;
@@ -44,6 +46,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
 
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
+        ViewGroup.LayoutParams  lp = holder.PersonImgView.getLayoutParams();
+        lp.width = 3*setWidth/10;
+        lp.height = 3*setWidth/10;
+        holder.PersonImgView.setLayoutParams(lp);
         holder.PersonImgView.setImageResource(contacts.get(position).getPersonImgId());
         holder.NameView.setText(contacts.get(position).getName());
         holder.InfoView.setText(contacts.get(position).getArea()+" "+contacts.get(position).getWeather());

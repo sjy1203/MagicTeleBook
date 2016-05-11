@@ -17,7 +17,7 @@ public class ContactViewHolder extends RecyclerView.ViewHolder implements View.O
 
     CircleImageView PersonImgView;
     TextView NameView;
-    TextView InfoView;
+    MarqueeText InfoView;
     IContactViewHolderClicks mListener;
     CardView cardView;
 
@@ -25,7 +25,7 @@ public class ContactViewHolder extends RecyclerView.ViewHolder implements View.O
         super(itemView);
         PersonImgView = (CircleImageView) itemView.findViewById(R.id.person_img);
         NameView = (TextView) itemView.findViewById(R.id.person_name);
-        InfoView = (TextView) itemView.findViewById(R.id.weather);
+        InfoView = (MarqueeText) itemView.findViewById(R.id.weather);
         mListener = listener;
         cardView = (CardView) itemView.findViewById(R.id.contact_card_view);
         cardView.setOnClickListener(this);
