@@ -47,8 +47,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         ViewGroup.LayoutParams  lp = holder.PersonImgView.getLayoutParams();
-        lp.width = 3*setWidth/10;
-        lp.height = 3*setWidth/10;
+        lp.width = 1*setWidth/3-32;
+        lp.height = 1*setWidth/3-32;
         holder.PersonImgView.setLayoutParams(lp);
         holder.PersonImgView.setImageResource(contacts.get(position).getPersonImgId());
         holder.NameView.setText(contacts.get(position).getName());

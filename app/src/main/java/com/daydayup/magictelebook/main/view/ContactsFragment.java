@@ -85,7 +85,7 @@ public class ContactsFragment extends Fragment {
         mContacts.add(contact[10]);
         mContacts.add(contact[11]);
 
-        Contact contacttest = new Contact("12","尚骏远","18986311211","湖北武汉","多云 27º", R.mipmap.touxiang);
+        Contact contacttest = new Contact("12","尚骏远","18986311211","内蒙古鄂尔多斯","多云转晴 27º", R.mipmap.touxiang);
         mContacts.add(contacttest);
     }
 

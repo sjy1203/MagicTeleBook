@@ -82,7 +82,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:id="@+id/call_btn"
-            android:background="@mipmap/call_image"
+            android:background="@mipmap/more"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"/>

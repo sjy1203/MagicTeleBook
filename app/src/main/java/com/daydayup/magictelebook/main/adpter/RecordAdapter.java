@@ -2,11 +2,13 @@ package com.daydayup.magictelebook.main.adpter;
 
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Record;
@@ -16,7 +18,6 @@ import com.daydayup.magictelebook.util.L;
 import java.util.List;
 
 import at.markushi.ui.CircleButton;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Jallen on 2016/5/8.
@@ -68,6 +69,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
                 @Override
                 public void onCallBtnClick() {
                     L.d(records.get(viewType).getTelno()+" is called");
+                    showEditPopupWindow(parent,view1,viewType);
                 }
             });
         }else if(viewType == SECONDITEM){
@@ -82,6 +84,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
                 @Override
                 public void onCallBtnClick() {
                     L.d(records.get(viewType).getTelno()+" is called");
+                    showEditPopupWindow(parent,view2,viewType);
                 }
             });
         }else if(viewType == LASTITEM){
@@ -95,6 +98,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
 
                 @Override
                 public void onCallBtnClick() {
+                    showEditPopupWindow(parent,view3,viewType);
                 }
             });
         }else{
@@ -109,6 +113,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
                 @Override
                 public void onCallBtnClick() {
                     L.d(records.get(viewType).getTelno()+" is called");
+                    showEditPopupWindow(parent,view4,viewType);
                 }
             });
         }
@@ -134,17 +139,24 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         return records;
     }
 
-    private void showPopupWindow(ViewGroup parent, View view, final int viewType){
-        View windowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_more,parent,false);
+    private void showPopupWindow(final ViewGroup parent, final View view, final int viewType){
+        final View windowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_more,parent,false);
         CircleButton call = (CircleButton) windowView.findViewById(R.id.record_pw_call);
         CircleButton smsg = (CircleButton) windowView.findViewById(R.id.record_pw_sendmsg);
-        CircleButton delete = (CircleButton) windowView.findViewById(R.id.record_pw_edit);
+        CircleButton edit = (CircleButton) windowView.findViewById(R.id.record_pw_edit);
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 L.d(records.get(getPosition(viewType)).getTelno()+" is called");
             }
         });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //showEditPopupWindow(parent,windowView,viewType);
+            }
+        });
+
         windowView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         final PopupWindow popupWindow = new PopupWindow(windowView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -183,5 +195,49 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
                 popupWindow.showAsDropDown(view,xoff,yoff1);
                 break;
         }
+    }
+
+    private void showEditPopupWindow(ViewGroup parent, View view, final int viewType) {
+        View EidtwindowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_edit,parent,false);
+        final PopupWindow EditpopupWindow = new PopupWindow(EidtwindowView,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        TextView cancel = (TextView) EidtwindowView.findViewById(R.id.cancleEdit);
+        TextView addblacklist = (TextView) EidtwindowView.findViewById(R.id.addToBlackList);
+        TextView deleterecord = (TextView) EidtwindowView.findViewById(R.id.deleteRecord);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditpopupWindow.dismiss();
+            }
+        });
+        addblacklist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //执行相应逻辑
+                EditpopupWindow.dismiss();
+            }
+        });
+        deleterecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //执行相应逻辑
+                EditpopupWindow.dismiss();
+            }
+        });
+        EditpopupWindow.setTouchable(true);
+
+        EditpopupWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
+        ColorDrawable dw = new ColorDrawable(0xb0000000);
+        EditpopupWindow.setBackgroundDrawable(dw);
+
+        EditpopupWindow.showAtLocation(view, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
+
+
     }
 }
