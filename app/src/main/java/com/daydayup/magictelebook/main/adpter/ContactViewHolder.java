@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.callback.IContactViewHolderClicks;
+import com.daydayup.magictelebook.util.MarqueeText;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

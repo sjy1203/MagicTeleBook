@@ -236,8 +236,10 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         EditpopupWindow.setBackgroundDrawable(dw);
 
+
         EditpopupWindow.showAtLocation(view, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
 
 
     }
+
 }

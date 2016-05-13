@@ -1,14 +1,20 @@
 package com.daydayup.magictelebook.main.view;
 
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.adpter.RecordAdapter;
@@ -18,6 +24,8 @@ import com.daydayup.magictelebook.util.L;
 import java.util.ArrayList;
 import java.util.List;
 
+import info.hoang8f.android.segmented.SegmentedGroup;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -26,6 +34,7 @@ public class RecordsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Record> mRecords = new ArrayList<>();
     private RecordAdapter mAapter;
+    private RelativeLayout search;
     public static final int NUM = 12;
 
     public RecordsFragment() {
@@ -33,10 +42,10 @@ public class RecordsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_records, container, false);
+        final View view = inflater.inflate(R.layout.fragment_records, container, false);
         initRecords();
         mAapter = new RecordAdapter(mRecords);
         recyclerView = (RecyclerView) view.findViewById(R.id.records_recyclerView);
@@ -45,7 +54,42 @@ public class RecordsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAapter);
         //MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).initRecords(NUM);
+        search = (RelativeLayout) view.findViewById(R.id.search_layout);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSearchWindow(container,view);
+            }
+        });
         return view;
+    }
+
+    private void showSearchWindow(ViewGroup parent,View view) {
+        View SearchWindowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_search,parent,false);
+        final PopupWindow SearchPopupWindow = new PopupWindow(SearchWindowView,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        TextView canclesearch = (TextView) SearchWindowView.findViewById(R.id.canclesearch);
+        SegmentedGroup segmentedSearchGroup = (SegmentedGroup) SearchWindowView.findViewById(R.id.segmented4);
+        segmentedSearchGroup.setTintColor(getResources().getColor(R.color.lightblue));
+        canclesearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchPopupWindow.dismiss();
+            }
+        });
+        SearchPopupWindow.setTouchable(true);
+
+        SearchPopupWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
+        ColorDrawable dw = new ColorDrawable(0xb0000000);
+        SearchPopupWindow.setBackgroundDrawable(dw);
+
+        SearchPopupWindow.showAtLocation(view, Gravity.TOP,0,0);
     }
 
     /*

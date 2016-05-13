@@ -8,4 +8,7 @@
     <color name="tabTextSelectedColor">#DCDCDC</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="gray">#808080</color>
+    <color name="lightgray">#F5F5F5</color>
+    <color name="lightblue">#5084FE</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.daydayup.magictelebook.main.adpter;
+package com.daydayup.magictelebook.util;
 
 import android.content.Context;
 import android.util.AttributeSet;
