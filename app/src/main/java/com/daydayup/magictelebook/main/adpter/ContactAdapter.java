@@ -1,5 +1,7 @@
 package com.daydayup.magictelebook.main.adpter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +10,10 @@ import android.view.ViewGroup;
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Contact;
 import com.daydayup.magictelebook.main.callback.IContactViewHolderClicks;
+import com.daydayup.magictelebook.main.view.ContactInfoActivity;
 import com.daydayup.magictelebook.util.L;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -19,10 +23,12 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     private List<Contact> contacts;
     private int setWidth;
+    private Context mContext;
 
-    public ContactAdapter(List<Contact> contactList,int setWidth){
+    public ContactAdapter(List<Contact> contactList,int setWidth,Context context){
         this.contacts = contactList;
         this.setWidth = setWidth;
+        this.mContext = context;
     }
     public List<Contact> getList(){
         return contacts;
@@ -34,11 +40,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     }
 
     @Override
-    public ContactViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+    public ContactViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item,parent,false);
         return new ContactViewHolder(view, new IContactViewHolderClicks() {
             @Override
             public void onItemClick() {
+                Contact contactdata = contacts.get(viewType);
+                Intent intent = new Intent(mContext, ContactInfoActivity.class);
+                intent.putExtra("contactdata",contactdata);
+                mContext.startActivity(intent);
                 L.d(contacts.get(viewType).getName()+" cardview is clicked");
             }
         });

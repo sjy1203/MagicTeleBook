@@ -1,9 +1,11 @@
 package com.daydayup.magictelebook.main.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Jay on 16/5/10.
  */
-public class Contact {
+public class Contact implements Serializable{
     private String _ID;//contact_id
     private String Name;//姓名
     private String Telno;//电话号码

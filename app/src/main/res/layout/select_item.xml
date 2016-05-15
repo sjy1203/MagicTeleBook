@@ -10,36 +10,36 @@
         android:layout_height="25dp"
         android:layout_margin="8dp"
         android:orientation="horizontal"
-        android:layout_gravity="center"
+        android:gravity="center_horizontal"
         >
         <RadioButton
-           android:id="@+id/name"
+           android:id="@+id/search_name"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="姓名"
            style="@style/RadioButton"
-            android:layout_weight="1"/>
+        />
         <RadioButton
-            android:id="@+id/no"
+            android:id="@+id/search_telno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="号码"
             style="@style/RadioButton"
-            android:layout_weight="1"/>
+            />
         <RadioButton
-            android:id="@+id/area"
+            android:id="@+id/search_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="地区"
             style="@style/RadioButton"
-            android:layout_weight="1"/>
+            />
         <RadioButton
-            android:id="@+id/all"
+            android:id="@+id/search_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="全部"
             style="@style/RadioButton"
-            android:layout_weight="1"/>
+            />
 
     </info.hoang8f.android.segmented.SegmentedGroup>
 

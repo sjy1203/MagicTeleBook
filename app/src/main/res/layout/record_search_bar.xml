@@ -20,7 +20,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="16dp"
-                android:src="@mipmap/enlarge_icon"
+                android:src="@mipmap/search_icon"
                 android:id="@+id/enlarge_img"
                 android:layout_marginTop="4.5dp"/>
             <TextView

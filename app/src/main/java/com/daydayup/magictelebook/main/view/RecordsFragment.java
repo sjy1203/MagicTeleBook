@@ -68,7 +68,7 @@ public class RecordsFragment extends Fragment {
         View SearchWindowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_search,parent,false);
         final PopupWindow SearchPopupWindow = new PopupWindow(SearchWindowView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-        TextView canclesearch = (TextView) SearchWindowView.findViewById(R.id.canclesearch);
+        TextView canclesearch = (TextView) SearchWindowView.findViewById(R.id.cancle_search);
         SegmentedGroup segmentedSearchGroup = (SegmentedGroup) SearchWindowView.findViewById(R.id.segmented4);
         segmentedSearchGroup.setTintColor(getResources().getColor(R.color.lightblue));
         canclesearch.setOnClickListener(new View.OnClickListener() {

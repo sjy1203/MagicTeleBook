@@ -42,7 +42,7 @@ public class ContactsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         initContacts();
-        mAdapter = new ContactAdapter(mContacts,getScreenWidth(getActivity()));
+        mAdapter = new ContactAdapter(mContacts,getScreenWidth(getActivity()),getActivity());
         recyclerView = (RecyclerView) view.findViewById(R.id.contacts_recyclerView);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
