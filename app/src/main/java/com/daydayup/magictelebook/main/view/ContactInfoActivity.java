@@ -85,7 +85,12 @@ public class ContactInfoActivity extends BaseAcitivity {
         personTel.setText(contactdata.getTelno());
         if(contactdata.getBlack()){
             IsBlack.setText("解除黑名单");
-        }else IsBlack.setText("加入黑名单");
+            IsBlack.setTextColor(getResources().getColor(R.color.lightblue));
+        }else{
+            IsBlack.setText("加入黑名单");
+            IsBlack.setTextColor(getResources().getColor(R.color.red));
+        }
+
         IsBlack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

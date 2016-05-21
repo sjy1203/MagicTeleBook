@@ -85,16 +85,16 @@
             android:text="16/5/6星期五"
             android:textSize="14sp"
             android:layout_centerVertical="true"
-            android:layout_alignTop="@+id/call_btn"
-            android:layout_toLeftOf="@+id/call_btn"
-            android:layout_toStartOf="@+id/call_btn"
+            android:layout_alignTop="@+id/more_btn"
+            android:layout_toLeftOf="@+id/more_btn"
+            android:layout_toStartOf="@+id/more_btn"
             android:layout_marginRight="5dp"
             />
 
         <ImageButton
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:id="@+id/call_btn"
+            android:id="@+id/more_btn"
             android:background="@mipmap/more"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Record;
 import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicks;
+import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicksAddMore;
 import com.daydayup.magictelebook.util.L;
 
 import java.util.List;
@@ -90,7 +91,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
             });
         }else if(viewType == LASTITEM){
             final View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_last,parent,false);
-            return new RecordViewHolder(view3, new IRecordViewHolderClicks() {
+            return new RecordViewHolder(view3, new IRecordViewHolderClicksAddMore() {
                 @Override
                 public void onItemClick() {
                     L.d(records.get(getPosition(viewType)).getName()+" is clicked");
@@ -100,6 +101,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
                 @Override
                 public void onCallBtnClick() {
                     showEditPopupWindow(parent,view3,viewType);
+                }
+
+                @Override
+                public void onAddBtnCLick() {
+                    L.d("More records are loaded!");
                 }
             });
         }else{
