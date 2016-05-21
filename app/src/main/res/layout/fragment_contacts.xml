@@ -5,17 +5,54 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/fragment_contacts"
-    tools:context="com.daydayup.magictelebook.main.view.ContactsFragment">
-
+    tools:context="com.daydayup.magictelebook.main.view.ContactsFragment"
+    android:background="@color/lightgray">
     <!-- TODO: Update blank fragment layout -->
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/contacts_recyclerView"
-            android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-         />
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+                <info.hoang8f.android.segmented.SegmentedGroup
+                    android:id="@+id/segmented2"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    >
+                    <RadioButton
+                        android:id="@+id/Contactlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="联系人"
+                        android:checked="true"
+                        style="@style/RadioButton"
+                        />
+                    <RadioButton
+                        android:id="@+id/BlackList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="黑名单"
+                        style="@style/RadioButton"
+                        />
+                </info.hoang8f.android.segmented.SegmentedGroup>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/contacts_recyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                />
+        </LinearLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_btn"
             android:layout_width="wrap_content"
@@ -29,5 +66,6 @@
             app:pressedTranslationZ="12dp"
             />
     </FrameLayout>
+
 
 </LinearLayout>

@@ -11,7 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.daydayup.magictelebook.BaseAcitivity;
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Contact;
 
@@ -19,22 +21,34 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ContactInfoActivity extends AppCompatActivity {
+public class ContactInfoActivity extends BaseAcitivity {
 
     private ImageView back_btn;
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private CircleImageView personImg;
     private CollapsingToolbarLayout layout;
+    private TextView personArea;
+    private TextView contactArea;
+    private TextView personWeather;
+    private TextView personTemp;
+    private TextView personTel;
+    private TextView IsBlack;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.contact_info);
+    protected void initView() {
+        setContentView(getLayoutId());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         back_btn = (ImageView) findViewById(R.id.back_btn);
         personImg = (CircleImageView) findViewById(R.id.person_img);
         layout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        personArea = (TextView) findViewById(R.id.person_area);
+        contactArea = (TextView) findViewById(R.id.contact_area);
+        personWeather = (TextView) findViewById(R.id.contact_weather);
+        personTemp = (TextView) findViewById(R.id.contact_temp);
+        personTel = (TextView) findViewById(R.id.person_telno);
+        IsBlack = (TextView) findViewById(R.id.addtoblack);
         fab = (FloatingActionButton) findViewById(R.id.edit_info);
         setSupportActionBar(toolbar);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,14 +66,42 @@ public class ContactInfoActivity extends AppCompatActivity {
             }
         });
         InitContactInfo();
+    }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.contact_info;
     }
 
     private void InitContactInfo() {
         Intent intent = getIntent();
-        Contact contactdata = (Contact) intent.getSerializableExtra("contactdata");
+        final Contact contactdata = (Contact) intent.getSerializableExtra("contactdata");
         layout.setTitle(contactdata.getName());
         personImg.setImageResource(contactdata.getPersonImgId());
+        personArea.setText(contactdata.getArea());
+        contactArea.setText(contactdata.getArea());
+        personWeather.setText(contactdata.getWeather());
+        personTemp.setText(contactdata.getTemperature());
+        personTel.setText(contactdata.getTelno());
+        if(contactdata.getBlack()){
+            IsBlack.setText("解除黑名单");
+        }else IsBlack.setText("加入黑名单");
+        IsBlack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(IsBlack.getText().equals("加入黑名单")){
+                    contactdata.setBlack(true);
+                    IsBlack.setText("解除黑名单");
+                    IsBlack.setTextColor(getResources().getColor(R.color.lightblue));
+                }else if(IsBlack.getText().equals("解除黑名单")){
+                    contactdata.setBlack(false);
+                    IsBlack.setText("加入黑名单");
+                    IsBlack.setTextColor(getResources().getColor(R.color.red));
+                }
+
+            }
+        });
+
     }
 
     @Override

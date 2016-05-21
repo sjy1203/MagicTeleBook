@@ -62,7 +62,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
         holder.PersonImgView.setLayoutParams(lp);
         holder.PersonImgView.setImageResource(contacts.get(position).getPersonImgId());
         holder.NameView.setText(contacts.get(position).getName());
-        holder.InfoView.setText(contacts.get(position).getArea()+" "+contacts.get(position).getWeather());
+        holder.InfoView.setText(contacts.get(position).getArea()+" "+contacts.get(position).getWeather()
+                +" "+contacts.get(position).getTemperature());
     }
 
     @Override

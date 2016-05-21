@@ -11,14 +11,19 @@ public class Contact implements Serializable{
     private String Telno;//电话号码
     private String Area;//地理位置
     private String Weather;//天气状况
+    private String Temperature;
+    private Boolean IsBlack;
     private int PersonImgId;// 用户缩略图(默认值)
 
-    public Contact(String _ID,String Name,String Telno,String Area,String Weather,int PersonImgId){
+    public Contact(String _ID,String Name,String Telno,String Area,String Weather,
+                   String Temperature, Boolean IsBlack,int PersonImgId){
         this._ID = _ID;
         this.Name = Name;
         this.Telno = Telno;
         this.Area = Area;
         this.Weather = Weather;
+        this.Temperature = Temperature;
+        this.IsBlack = IsBlack;
         this.PersonImgId = PersonImgId;
     }
 
@@ -60,6 +65,22 @@ public class Contact implements Serializable{
 
     public void setWeather(String weather) {
         Weather = weather;
+    }
+
+    public void setTemperature(String temperature) {
+        Temperature = temperature;
+    }
+
+    public String getTemperature() {
+        return Temperature;
+    }
+
+    public Boolean getBlack() {
+        return IsBlack;
+    }
+
+    public void setBlack(Boolean black) {
+        IsBlack = black;
     }
 
     public int getPersonImgId() {

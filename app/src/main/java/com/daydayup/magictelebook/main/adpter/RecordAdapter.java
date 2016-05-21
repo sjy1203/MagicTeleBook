@@ -1,5 +1,6 @@
 package com.daydayup.magictelebook.main.adpter;
 
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -124,9 +125,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         L.d("onBindView name"+records.get(position).getName());
         holder.NameView.setText(records.get(position).getName());
         holder.PersonImgView.setImageResource(records.get(position).getPersonImgId());
-        //holder.TelnoView.setText(records.get(position).getTelno());
-        holder.TypeView.setText(records.get(position).getType()+",");
-        holder.AreaView.setText(records.get(position).getArea()+",");
+        if(records.get(position).getType().equals("未接")){
+            holder.NameView.setTextColor(Color.rgb(255,0,0));
+        }
+        holder.TypeView.setText(records.get(position).getType());
+        holder.AreaView.setText(records.get(position).getArea());
         holder.TimeView.setText(records.get(position).getTime());
     }
 
