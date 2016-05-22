@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.daydayup.magictelebook.BaseAcitivity;
 import com.daydayup.magictelebook.R;
+import com.daydayup.magictelebook.main.bean.BriefContact;
 import com.daydayup.magictelebook.main.bean.Contact;
 
 import java.util.List;
@@ -75,15 +76,15 @@ public class ContactInfoActivity extends BaseAcitivity {
 
     private void InitContactInfo() {
         Intent intent = getIntent();
-        final Contact contactdata = (Contact) intent.getSerializableExtra("contactdata");
+        final BriefContact contactdata = (BriefContact) intent.getSerializableExtra("contactdata");
         layout.setTitle(contactdata.getName());
-        personImg.setImageResource(contactdata.getPersonImgId());
+        personImg.setImageResource(R.mipmap.touxiang);
         personArea.setText(contactdata.getArea());
         contactArea.setText(contactdata.getArea());
         personWeather.setText(contactdata.getWeather());
         personTemp.setText(contactdata.getTemperature());
-        personTel.setText(contactdata.getTelno());
-        if(contactdata.getBlack()){
+        personTel.setText(contactdata.getNumber());
+        if(contactdata.isBlack()){
             IsBlack.setText("解除黑名单");
             IsBlack.setTextColor(getResources().getColor(R.color.lightblue));
         }else{

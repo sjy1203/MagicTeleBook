@@ -58,21 +58,8 @@ public class MainPresenter {
     @return void
     @brief 获取所有联系人的简单信息(姓名,_ID)
      */
-    public void initBriefContacts(){
-        mainModel.initBriefContacts(new OnBriefContactsInitListener() {
-            @Override
-            public void onLoadSuccess(List<Contact> contactList) {
-                List<Contact> contacts = mainView.getContactAdapter().getList();
-                if (contacts==null) contacts = new ArrayList<Contact>();
-                contacts.addAll(contactList);
-                mainView.getContactAdapter().notifyDataSetChanged();
-            }
-
-            @Override
-            public void onLoadFailed(String msg) {
-                T.showShort(context,msg);
-            }
-        });
+    public void initBriefContacts(int num,OnBriefContactsInitListener onBriefContactsInitListener){
+        mainModel.initContacts(num,onBriefContactsInitListener);
     }
 
 

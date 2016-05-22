@@ -15,17 +15,17 @@ public class Contact implements Serializable{
     private Boolean IsBlack;
     private int PersonImgId;// 用户缩略图(默认值)
 
-    public Contact(String _ID,String Name,String Telno,String Area,String Weather,
-                   String Temperature, Boolean IsBlack,int PersonImgId){
-        this._ID = _ID;
-        this.Name = Name;
-        this.Telno = Telno;
-        this.Area = Area;
-        this.Weather = Weather;
-        this.Temperature = Temperature;
-        this.IsBlack = IsBlack;
-        this.PersonImgId = PersonImgId;
-    }
+//    public Contact(String _ID,String Name,String Telno,String Area,String Weather,
+//                   String Temperature, Boolean IsBlack,int PersonImgId){
+//        this._ID = _ID;
+//        this.Name = Name;
+//        this.Telno = Telno;
+//        this.Area = Area;
+//        this.Weather = Weather;
+//        this.Temperature = Temperature;
+//        this.IsBlack = IsBlack;
+//        this.PersonImgId = PersonImgId;
+//    }
 
     public String get_ID() {
         return _ID;

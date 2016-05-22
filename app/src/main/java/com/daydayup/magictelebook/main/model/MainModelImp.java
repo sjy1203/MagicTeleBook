@@ -4,11 +4,15 @@ import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.CallLog;
+import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.telecom.Call;
 import android.text.TextUtils;
 
+import com.daydayup.magictelebook.main.bean.BriefContact;
+import com.daydayup.magictelebook.main.bean.Contact;
 import com.daydayup.magictelebook.main.bean.Record;
 import com.daydayup.magictelebook.main.callback.OnBriefContactsInitListener;
 import com.daydayup.magictelebook.main.callback.OnRecordsInitListener;
@@ -37,9 +41,21 @@ public class MainModelImp implements IMainModel{
     }
 
     @Override
-    public void initBriefContacts(OnBriefContactsInitListener onBriefContactsInitListener) {
-
+    public void initContacts(int num, OnBriefContactsInitListener onBriefContactsInitListener) {
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI; // 联系人Uri；
+        // 查询的字段
+        String[] projection = {
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.DATA1, "sort_key",
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+                ContactsContract.CommonDataKinds.Phone.PHOTO_ID,
+                ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
+        };
+        // 按照sort_key升序查詢
+        asyncQueryHandler.startQuery(Token.TOKEN_initContacts, onBriefContactsInitListener, uri, projection, null, null,
+                "sort_key COLLATE LOCALIZED asc");
     }
+
 
     private class MyAsycQueryHandler extends AsyncQueryHandler{
 
@@ -53,7 +69,50 @@ public class MainModelImp implements IMainModel{
                 case Token.TOKEN_initRecords:
                     initRecordsFin((OnRecordsInitListener)cookie,cursor);
                     break;
+                case Token.TOKEN_initContacts:
+                    initContactsFin((OnBriefContactsInitListener)cookie,cursor);
+                    break;
             }
+        }
+
+        /**
+         * 初始化联系人列表
+         * @param cookie
+         * @param cursor
+         */
+        private void initContactsFin(OnBriefContactsInitListener cookie, Cursor cursor) {
+            if (cursor==null){
+                cookie.onLoadFailed("initContacts cursor null");
+                return;
+            }
+            List<BriefContact> briefContacts = new ArrayList<>();
+            while (cursor.moveToNext()){
+                Long contactId;
+                String lookUpKey;  //此两个是主键
+                String name;
+                String number;
+                Long photoId;
+                String sortKey;
+
+                contactId = cursor.getLong(3);
+                lookUpKey = cursor.getString(5);
+                name = cursor.getString(0);
+                number = cursor.getString(1);
+                photoId = cursor.getLong(4);
+                sortKey = cursor.getString(2);
+
+                BriefContact briefContact = new BriefContact();
+                briefContact.setContactId(contactId);
+                briefContact.setLookUpKey(lookUpKey);
+                briefContact.setName(name);
+                briefContact.setNumber(number);
+                briefContact.setPhotoId(photoId);
+                briefContact.setSortKey(sortKey);
+
+                briefContacts.add(briefContact);
+            }
+            cursor.close();
+            cookie.onLoadSuccess(briefContacts);
         }
 
         /**
@@ -109,5 +168,6 @@ public class MainModelImp implements IMainModel{
 
     private class Token {
         public static final int TOKEN_initRecords = 0;
+        public static final int TOKEN_initContacts = 1;
     }
 }
