@@ -55,6 +55,26 @@ public class MainModelImp implements IMainModel{
         asyncQueryHandler.startQuery(Token.TOKEN_initContacts, onBriefContactsInitListener, uri, projection, null, null,
                 "sort_key COLLATE LOCALIZED asc");
     }
+    //TODO:
+    @Override
+    public void incrementRecords(int offset, int num, OnRecordsInitListener onRecordsInitListener) {
+
+    }
+
+    @Override
+    public void searchRecordsByName(String name, OnRecordsInitListener onRecordsInitListener) {
+
+    }
+
+    @Override
+    public void searchRecordsByNumber(String number, OnRecordsInitListener onRecordsInitListener) {
+
+    }
+
+    @Override
+    public void searchRecordsByAll(String searchStr, OnRecordsInitListener onRecordsInitListener) {
+
+    }
 
 
     private class MyAsycQueryHandler extends AsyncQueryHandler{
