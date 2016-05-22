@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecordsFragment extends Fragment {
+public class RecordsFragment extends Fragment implements View.OnClickListener{
     //view
     private RecyclerView recyclerView;
     private RecordAdapter mAapter;
@@ -76,6 +77,18 @@ public class RecordsFragment extends Fragment {
         TextView canclesearch = (TextView) SearchWindowView.findViewById(R.id.cancle_search);
         SegmentedGroup segmentedSearchGroup = (SegmentedGroup) SearchWindowView.findViewById(R.id.segmented4);
         segmentedSearchGroup.setTintColor(getResources().getColor(R.color.lightblue));
+
+        Button search_name,search_telno,search_area,search_all;
+        search_name = (Button) SearchWindowView.findViewById(R.id.search_name);
+        search_telno = (Button) SearchWindowView.findViewById(R.id.search_telno);
+        search_area = (Button) SearchWindowView.findViewById(R.id.search_area);
+        search_all = (Button) SearchWindowView.findViewById(R.id.search_all);
+        search_name.setOnClickListener(this);
+        search_telno.setOnClickListener(this);
+        search_area.setOnClickListener(this);
+        search_all.setOnClickListener(this);
+
+
         canclesearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,5 +165,23 @@ public class RecordsFragment extends Fragment {
     }
     public RecordAdapter getAdpter(){
         return mAapter;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.search_name:
+
+                break;
+            case R.id.search_telno:
+
+                break;
+            case R.id.search_all:
+
+                break;
+            case R.id.search_area:
+
+                break;
+        }
     }
 }

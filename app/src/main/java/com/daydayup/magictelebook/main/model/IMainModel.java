@@ -9,5 +9,11 @@ import com.daydayup.magictelebook.main.callback.OnRecordsInitListener;
 public interface IMainModel {
     //详见MainPresenter函数说明
     void initRecords(int num, OnRecordsInitListener onRecordsInitListener);
-    void initBriefContacts(OnBriefContactsInitListener onBriefContactsInitListener);
+    void initContacts(int num,OnBriefContactsInitListener onBriefContactsInitListener);
+
+    void incrementRecords(int offset,int num,OnRecordsInitListener onRecordsInitListener);
+
+    void searchRecordsByName(String name,OnRecordsInitListener onRecordsInitListener);
+    void searchRecordsByNumber(String number,OnRecordsInitListener onRecordsInitListener);
+    void searchRecordsByAll(String searchStr,OnRecordsInitListener onRecordsInitListener);
 }
