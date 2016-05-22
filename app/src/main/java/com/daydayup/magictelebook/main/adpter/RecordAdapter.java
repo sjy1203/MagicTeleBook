@@ -1,13 +1,22 @@
 package com.daydayup.magictelebook.main.adpter;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -15,6 +24,7 @@ import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Record;
 import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicks;
 import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicksAddMore;
+import com.daydayup.magictelebook.util.BottomDialog;
 import com.daydayup.magictelebook.util.L;
 
 import java.util.List;
@@ -29,78 +39,81 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
     private final static int FIRSTITEM = 0;
     private final static int SECONDITEM = 1;
     private final static int LASTITEM = 999;
+    private final static int REQUEST_CODE_ASK_CALL_PHONE = 123;
+    private Context mContext;
     private List<Record> records;
 
-    public RecordAdapter(List<Record> recordList){
-        L.d("list size"+recordList.size());
+    public RecordAdapter(List<Record> recordList, Context context) {
+        L.d("list size" + recordList.size());
         records = recordList;
+        mContext = context;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 0){
+        if (position == 0) {
             return FIRSTITEM;
-        }else if(position == 1){
+        } else if (position == 1) {
             return SECONDITEM;
-        }else if(position == records.size()-1){
+        } else if (position == records.size() - 1) {
             return LASTITEM;
-        }else return position;
+        } else return position;
     }
 
-    public int getPosition(int viewType){
-        if(viewType == FIRSTITEM){
+    public int getPosition(int viewType) {
+        if (viewType == FIRSTITEM) {
             return 0;
-        }else if(viewType == SECONDITEM){
-            return 2;
-        } else if(viewType == LASTITEM){
-            return records.size()-1;
-        }else return viewType;
+        } else if (viewType == SECONDITEM) {
+            return 1;
+        } else if (viewType == LASTITEM) {
+            return records.size() - 1;
+        } else return viewType;
     }
 
     @Override
     public RecordViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        if (viewType == FIRSTITEM){
-            final View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_first,parent,false);
+        if (viewType == FIRSTITEM) {
+            final View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_first, parent, false);
             return new RecordViewHolder(view1, new IRecordViewHolderClicks() {
                 @Override
                 public void onItemClick() {
-                    L.d(records.get(viewType).getName()+" is clicked");
-                    showPopupWindow(parent,view1,viewType);
+                    L.d(records.get(viewType).getName() + " is clicked");
+                    showPopupWindow(parent, view1, viewType);
                 }
 
                 @Override
                 public void onCallBtnClick() {
-                    L.d(records.get(viewType).getTelno()+" is called");
-                    showEditPopupWindow(parent,view1,viewType);
+                    L.d(records.get(viewType).getTelno() + " is called");
+                    showEditDialog(mContext, viewType);
                 }
             });
-        }else if(viewType == SECONDITEM){
-            final View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_second,parent,false);
+        } else if (viewType == SECONDITEM) {
+            final View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_second, parent, false);
             return new RecordViewHolder(view2, new IRecordViewHolderClicks() {
                 @Override
                 public void onItemClick() {
-                    L.d(records.get(viewType).getName()+" is clicked");
-                    showPopupWindow(parent,view2,viewType);
+                    L.d(records.get(viewType).getName() + " is clicked");
+                    showPopupWindow(parent, view2, viewType);
                 }
 
                 @Override
                 public void onCallBtnClick() {
-                    L.d(records.get(viewType).getTelno()+" is called");
-                    showEditPopupWindow(parent,view2,viewType);
+                    L.d(records.get(viewType).getTelno() + " is called");
+                    showEditDialog(mContext, viewType);
                 }
             });
-        }else if(viewType == LASTITEM){
-            final View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_last,parent,false);
+        } else if (viewType == LASTITEM) {
+            final View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item_last, parent, false);
             return new RecordViewHolder(view3, new IRecordViewHolderClicksAddMore() {
                 @Override
                 public void onItemClick() {
-                    L.d(records.get(getPosition(viewType)).getName()+" is clicked");
-                    showPopupWindow(parent,view3,viewType);
+                    L.d(records.get(getPosition(viewType)).getName() + " is clicked");
+                    showPopupWindow(parent, view3, viewType);
                 }
 
                 @Override
                 public void onCallBtnClick() {
-                    showEditPopupWindow(parent,view3,viewType);
+                    showEditDialog(mContext, viewType);
                 }
 
                 @Override
@@ -108,19 +121,19 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
                     L.d("More records are loaded!");
                 }
             });
-        }else{
-            final View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item,parent,false);
+        } else {
+            final View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_item, parent, false);
             return new RecordViewHolder(view4, new IRecordViewHolderClicks() {
                 @Override
                 public void onItemClick() {
-                    L.d(records.get(viewType).getName()+" is clicked");
-                    showPopupWindow(parent,view4,viewType);
+                    L.d(records.get(viewType).getName() + " is clicked");
+                    showPopupWindow(parent, view4, viewType);
                 }
 
                 @Override
                 public void onCallBtnClick() {
-                    L.d(records.get(viewType).getTelno()+" is called");
-                    showEditPopupWindow(parent,view4,viewType);
+                    L.d(records.get(viewType).getTelno() + " is called");
+                    showEditDialog(mContext, viewType);
                 }
             });
         }
@@ -128,12 +141,12 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
 
     @Override
     public void onBindViewHolder(RecordViewHolder holder, int position) {
-        L.d("onBindView name"+records.get(position).getName());
+        L.d("onBindView name" + records.get(position).getName());
         holder.NameView.setText(records.get(position).getName());
         //TODO:
-        holder.PersonImgView.setImageResource(R.mipmap.touxiang1);
-        if(records.get(position).getType().equals("未接")){
-            holder.NameView.setTextColor(Color.rgb(255,0,0));
+        holder.PersonImgView.setImageResource((int) records.get(position).getPersonImgId());
+        if (records.get(position).getType().equals("未接")) {
+            holder.NameView.setTextColor(Color.rgb(255, 0, 0));
         }
         holder.TypeView.setText(records.get(position).getType());
         holder.AreaView.setText(records.get(position).getArea());
@@ -145,19 +158,40 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         return records.size();
     }
 
-    public List<Record> getList(){
+    public List<Record> getList() {
         return records;
     }
 
-    private void showPopupWindow(final ViewGroup parent, final View view, final int viewType){
-        final View windowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_more,parent,false);
+    private void showPopupWindow(final ViewGroup parent, final View view, final int viewType) {
+        final View windowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_more, parent, false);
         CircleButton call = (CircleButton) windowView.findViewById(R.id.record_pw_call);
         CircleButton smsg = (CircleButton) windowView.findViewById(R.id.record_pw_sendmsg);
         CircleButton edit = (CircleButton) windowView.findViewById(R.id.record_pw_edit);
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                L.d(records.get(getPosition(viewType)).getTelno()+" is called");
+                L.d(records.get(getPosition(viewType)).getTelno() + " is called");
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + records.get(getPosition(viewType)).getTelno()));
+                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    ActivityCompat.requestPermissions((Activity) mContext,new String[]{Manifest.permission.CALL_PHONE},REQUEST_CODE_ASK_CALL_PHONE);
+                    return;
+                }
+                mContext.startActivity(callIntent);
+            }
+        });
+        smsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("smsto:" + records.get(getPosition(viewType)).getTelno());
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
+                sendIntent.putExtra("sms_body", "");
+                mContext.startActivity(sendIntent);
             }
         });
         edit.setOnClickListener(new View.OnClickListener() {
@@ -207,49 +241,30 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         }
     }
 
-    private void showEditPopupWindow(ViewGroup parent, View view, final int viewType) {
-        View EidtwindowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.record_edit,parent,false);
-        final PopupWindow EditpopupWindow = new PopupWindow(EidtwindowView,
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        TextView cancel = (TextView) EidtwindowView.findViewById(R.id.cancleEdit);
-        TextView addblacklist = (TextView) EidtwindowView.findViewById(R.id.addToBlackList);
-        TextView deleterecord = (TextView) EidtwindowView.findViewById(R.id.deleteRecord);
-        cancel.setOnClickListener(new View.OnClickListener() {
+    private void showEditDialog(Context context, final int viewType){
+        BottomDialog.Builder builder = new BottomDialog.Builder(context);
+        builder.setActionTouch("取消", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                EditpopupWindow.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
-        addblacklist.setOnClickListener(new View.OnClickListener() {
+        builder.setItem1Touch("加入黑名单", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //执行相应逻辑
-                EditpopupWindow.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                L.d(records.get(getPosition(viewType)).getName()+"is added to BlackList");
             }
         });
-        deleterecord.setOnClickListener(new View.OnClickListener() {
+        builder.setItem2Touch("删除", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //执行相应逻辑
-                EditpopupWindow.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                L.d(records.get(getPosition(viewType)).getName()+"is deleted");
             }
         });
-        EditpopupWindow.setTouchable(true);
-
-        EditpopupWindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-
-        ColorDrawable dw = new ColorDrawable(0xb0000000);
-        EditpopupWindow.setBackgroundDrawable(dw);
-
-
-        EditpopupWindow.showAtLocation(view, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
-
-
+        builder.create().show();
     }
+
 
 }
