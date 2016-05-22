@@ -24,13 +24,15 @@ public class MainActivity extends BaseAcitivity implements IMainView{
     //adapter
     private ViewPagerAdapter viewPagerAdapter;
 
+    //frgment
+    List<Fragment> fragmentList;
     @Override
     protected void initView() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         //initial viewpager
-        List<Fragment> fragmentList = new ArrayList<>();
+        fragmentList = new ArrayList<>();
         fragmentList.add(new RecordsFragment());
         fragmentList.add(new ContactsFragment());
         List<String> titleList = new ArrayList<>();
@@ -50,11 +52,12 @@ public class MainActivity extends BaseAcitivity implements IMainView{
         return R.layout.activity_main;
     }
 
-    //TODO:@yanhangyu
+
     @Override
     public RecordAdapter getRecordAdapter() {
-        return null;
+        return ((RecordsFragment)fragmentList.get(0)).getAdpter();
     }
+
     //TODO:@yanhangyu
     @Override
     public ContactAdapter getContactAdapter() {
@@ -86,4 +89,6 @@ public class MainActivity extends BaseAcitivity implements IMainView{
             return titleList.get(position);
         }
     }
+
+
 }

@@ -75,18 +75,18 @@ public class TimeUtils {
 			int hour = (int) ((sec % 86400) / 3600);
 			int min = (int) ((sec % 86400 % 3600) / 60);
 			int second = (int) (sec % 86400 % 3600 % 60);
-			buf.append(day).append("�?").append(hour).append("小时").append(min).append("�?").append(second).append("�?");
+			buf.append(day).append("天").append(hour).append("小时").append(min).append("分").append(second).append("秒");
 		} else if (sec > 3600) {
 			int hour = (int) (sec / 3600);
 			int min = (int) ((sec % 3600) / 60);
 			int second = (int) (sec % 3600 % 60);
-			buf.append(hour).append("小时").append(min).append("�?").append(second).append("�?");
+			buf.append(hour).append("小时").append(min).append("分钟").append(second).append("秒");
 		} else if (sec > 60) {
 			int min = (int) (sec / 60);
 			int second = (int) (sec % 60);
-			buf.append(min).append("�?").append(second).append("�?");
+			buf.append(min).append("分钟").append(second).append("秒");
 		} else {
-			buf.append(sec).append("�?");
+			buf.append(sec).append("秒");
 		}
 
 		return buf.toString();
@@ -170,9 +170,9 @@ public class TimeUtils {
 				if (min == 0)
 					return "刚刚";
 				else
-					return (int) (difftime / 60) + "分钟�?";
+					return (int) (difftime / 60) + "分钟";
 			} else {
-				return (int) (difftime / 3600) + "小时�?";
+				return (int) (difftime / 3600) + "小时";
 			}
 		} else {
 			Calendar now = Calendar.getInstance();
@@ -190,9 +190,9 @@ public class TimeUtils {
 					&& c.get(Calendar.DATE) == now.get(Calendar.DATE) - 2) {
 				return new SimpleDateFormat("前天 HH:mm").format(c.getTime());
 			} else if (c.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
-				return new SimpleDateFormat("M月d�? HH:mm").format(c.getTime());
+				return new SimpleDateFormat("M月d日 HH:mm").format(c.getTime());
 			} else {
-				return new SimpleDateFormat("yy年M月d�?").format(c.getTime());
+				return new SimpleDateFormat("yy年M月d日").format(c.getTime());
 			}
 		}
 	}

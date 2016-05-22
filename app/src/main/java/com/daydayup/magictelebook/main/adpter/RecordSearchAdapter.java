@@ -60,11 +60,12 @@ public class RecordSearchAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.NameView.setText(mRecords.get(position).getName());
-        viewHolder.PersonImgView.setImageResource(mRecords.get(position).getPersonImgId());
+        //TODO:
+        viewHolder.PersonImgView.setImageResource(R.mipmap.touxiang);
         viewHolder.TelnoView.setText(mRecords.get(position).getTelno());
         viewHolder.TypeView.setText(mRecords.get(position).getType()+",");
         viewHolder.AreaView.setText(mRecords.get(position).getArea()+",");
-        viewHolder.TimeView.setText(mRecords.get(position).getTime());
+        viewHolder.TimeView.setText(mRecords.get(position).getDate());
         return  convertView;
     }
 
