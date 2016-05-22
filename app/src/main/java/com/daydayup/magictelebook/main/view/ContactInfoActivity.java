@@ -1,5 +1,6 @@
 package com.daydayup.magictelebook.main.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.daydayup.magictelebook.BaseAcitivity;
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.Contact;
+import com.daydayup.magictelebook.util.CustomDialog;
 
 import java.util.List;
 
@@ -95,13 +97,46 @@ public class ContactInfoActivity extends BaseAcitivity {
             @Override
             public void onClick(View v) {
                 if(IsBlack.getText().equals("加入黑名单")){
-                    contactdata.setBlack(true);
-                    IsBlack.setText("解除黑名单");
-                    IsBlack.setTextColor(getResources().getColor(R.color.lightblue));
+                    CustomDialog.Builder builder = new CustomDialog.Builder(ContactInfoActivity.this);
+                    builder.setTitle("提示");
+                    builder.setMessage("确定加入黑名单吗？");
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            contactdata.setBlack(true);
+                            IsBlack.setText("解除黑名单");
+                            IsBlack.setTextColor(getResources().getColor(R.color.lightblue));
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+
                 }else if(IsBlack.getText().equals("解除黑名单")){
-                    contactdata.setBlack(false);
-                    IsBlack.setText("加入黑名单");
-                    IsBlack.setTextColor(getResources().getColor(R.color.red));
+                    CustomDialog.Builder builder = new CustomDialog.Builder(ContactInfoActivity.this);
+                    builder.setTitle("提示");
+                    builder.setMessage("确定解除黑名单吗？");
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            contactdata.setBlack(false);
+                            IsBlack.setText("加入黑名单");
+                            IsBlack.setTextColor(getResources().getColor(R.color.red));
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
                 }
 
             }
