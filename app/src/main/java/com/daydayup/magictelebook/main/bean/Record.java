@@ -8,21 +8,39 @@ import android.provider.ContactsContract;
 public class Record {
     private String _ID; //contact_id
     private String Name; //姓名
-    private int PersonImgId;// 用户缩略图(默认值)
     private String Telno;//电话号码
     private String Type;//来电,去电,未接等
     private String Area;//地区
-    private String Time;//最近一次通话时间
+    private String Duration;//通话时间
+    private long PersonImgId;// 用户缩略图(查询值)
+    private String Date;
 
-    public Record(String _ID,String Name,String Telno,String Type,String Area,String Time,
-                  int PersonImgId){
+    public Record(String _ID,String Name,String Telno,String Type,String Area,String Duration,String Date,
+                  long PersonImgId){
         this._ID = _ID;
         this.Name = Name;
         this.Telno = Telno;
         this.Type = Type;
         this.Area = Area;
-        this.Time = Time;
+        this.Duration = Duration;
+        this.Date = Date;
         this.PersonImgId = PersonImgId;
+    }
+
+    public String getDuration() {
+        return Duration;
+    }
+
+    public void setDuration(String duration) {
+        Duration = duration;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
     }
 
     public void set_ID(String _ID) {
@@ -33,7 +51,7 @@ public class Record {
         Name = name;
     }
 
-    public void setPersonImgId(int personImgId) {
+    public void setPersonImgId(long personImgId) {
         PersonImgId = personImgId;
     }
 
@@ -49,19 +67,14 @@ public class Record {
         Area = area;
     }
 
-    public void setTime(String time) {
-        Time = time;
-    }
     public String get_ID() {
         return _ID;
     }
+
     public String getArea() {
         return Area;
     }
 
-    public String getTime() {
-        return Time;
-    }
 
     public String getType() {
         return Type;
@@ -75,8 +88,12 @@ public class Record {
         return Telno;
     }
 
-    public int getPersonImgId() {
+    public long getPersonImgId() {
         return PersonImgId;
     }
 
+    @Override
+    public String toString() {
+        return "name: "+getName()+"\nlkid: "+get_ID()+"\ntype: "+getType()+"\nduration: "+getDuration()+"\ndate: "+getDate()+"\nimgid: "+getPersonImgId()+"area: "+getArea();
+    }
 }

@@ -1,6 +1,8 @@
 package com.daydayup.magictelebook.main.presenter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.daydayup.magictelebook.main.bean.Contact;
 import com.daydayup.magictelebook.main.bean.Record;
@@ -9,6 +11,8 @@ import com.daydayup.magictelebook.main.callback.OnRecordsInitListener;
 import com.daydayup.magictelebook.main.model.IMainModel;
 import com.daydayup.magictelebook.main.model.MainModelImp;
 import com.daydayup.magictelebook.main.view.IMainView;
+import com.daydayup.magictelebook.main.view.MainActivity;
+import com.daydayup.magictelebook.util.L;
 import com.daydayup.magictelebook.util.T;
 
 import java.util.ArrayList;
@@ -44,21 +48,8 @@ public class MainPresenter {
     @return void
     @brief 从_id=0开始,获取num个通话记录用来初始化列表(适配器)
      */
-    public void initRecords(int num){
-        mainModel.initRecords(num, new OnRecordsInitListener() {
-            @Override
-            public void onLoadSuccess(List<Record> recordList) {
-                List<Record> records = mainView.getRecordAdapter().getList();
-                if (records==null) records=new ArrayList<Record>();
-                records.addAll(recordList);
-                mainView.getRecordAdapter().notifyDataSetChanged();
-            }
-
-            @Override
-            public void onLoadFailed(String msg) {
-                T.showShort(context,msg);
-            }
-        });
+    public void initRecords(int num,OnRecordsInitListener onRecordsInitListener){
+        mainModel.initRecords(num,onRecordsInitListener);
     }
 
 

@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.daydayup.magictelebook.util.L;
+
 /**
  * Created by Jay on 16/5/4.
  */
