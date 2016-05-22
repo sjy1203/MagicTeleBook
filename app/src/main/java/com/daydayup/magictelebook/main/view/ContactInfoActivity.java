@@ -172,7 +172,7 @@ public class ContactInfoActivity extends BaseAcitivity {
         personImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditDialog(ContactInfoActivity.this,contactdata.getPersonImgId());
+                showEditDialog(ContactInfoActivity.this,contactdata.getPhotoId());
             }
         });
 
@@ -203,7 +203,7 @@ public class ContactInfoActivity extends BaseAcitivity {
     /*
      *拍照或从相册选取并裁剪
      */
-    private void showEditDialog(Context context, final int PersonImgId){
+    private void showEditDialog(Context context, final long PersonImgId){
         BottomDialog.Builder builder = new BottomDialog.Builder(context);
         builder.setActionTouch("取消", new DialogInterface.OnClickListener() {
             @Override
