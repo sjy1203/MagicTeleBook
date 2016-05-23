@@ -8,18 +8,25 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.adpter.RecordAdapter;
+import com.daydayup.magictelebook.main.adpter.RecordSearchAdapter;
 import com.daydayup.magictelebook.main.bean.Record;
 import com.daydayup.magictelebook.main.callback.OnRecordsInitListener;
 import com.daydayup.magictelebook.main.presenter.MainPresenter;
@@ -39,9 +46,24 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
     private RecyclerView recyclerView;
     private RecordAdapter mAapter;
     private RelativeLayout search;
+    private EditText search_et_input;
+    private ListView records_search_listView;
+    private RecordSearchAdapter recordSearchAdapter;
+
+    //const
     public static final int NUM = 12;
+
+    //List
     private List<Record> records = new ArrayList<>();
     private List<Record> mRecords = new ArrayList<>();
+    private List<Record> searchRecords = new ArrayList<>();
+
+    //searchOptions
+    enum SearchOp{NULL,NAME,NUMBER,AREA,ALL};
+    SearchOp searchOp = SearchOp.NULL;
+
+    //flag
+    boolean isLoadingMore = false;
     public RecordsFragment() {
         // Required empty public constructor
     }
@@ -51,12 +73,27 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_records, container, false);
-        mAapter = new RecordAdapter(mRecords,getActivity());
+        mAapter = new RecordAdapter(records,getActivity());
         recyclerView = (RecyclerView) view.findViewById(R.id.records_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAapter);
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastPos = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                int itemAllCount = recyclerView.getLayoutManager().getItemCount();
+                if (lastPos >= itemAllCount - 5 && dy > 0) {
+                    if(isLoadingMore){
+
+                    } else{
+                        loadPage(itemAllCount);//这里多线程也要手动控制isLoadingMore
+                    }
+                }
+            }
+        });
         search = (RelativeLayout) view.findViewById(R.id.search_layout);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +105,22 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
+    private void loadPage(int offset) {
+        isLoadingMore = true;
+        MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).incrementRecords(offset, NUM, new OnRecordsInitListener() {
+            @Override
+            public void onLoadSuccess(List<Record> recordList) {
+                isLoadingMore = false;
+                records.addAll(recordList);
+                mAapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLoadFailed(String msg) {
+
+            }
+        });
+    }
 
 
     private void showSearchWindow(ViewGroup parent, View view) {
@@ -78,7 +131,8 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
         SegmentedGroup segmentedSearchGroup = (SegmentedGroup) SearchWindowView.findViewById(R.id.segmented4);
         segmentedSearchGroup.setTintColor(getResources().getColor(R.color.lightblue));
 
-        Button search_name,search_telno,search_area,search_all;
+        Button search_name,search_telno,search_area,search_all;ImageView search_iv_delete;
+        search_iv_delete = (ImageView) SearchWindowView.findViewById(R.id.search_iv_delete);
         search_name = (Button) SearchWindowView.findViewById(R.id.search_name);
         search_telno = (Button) SearchWindowView.findViewById(R.id.search_telno);
         search_area = (Button) SearchWindowView.findViewById(R.id.search_area);
@@ -87,7 +141,34 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
         search_telno.setOnClickListener(this);
         search_area.setOnClickListener(this);
         search_all.setOnClickListener(this);
+        search_iv_delete.setClickable(true); search_iv_delete.setOnClickListener(this);
 
+
+        search_et_input = (EditText) SearchWindowView.findViewById(R.id.search_et_input);
+
+        records_search_listView = (ListView) SearchWindowView.findViewById(R.id.records_search_listView);
+        recordSearchAdapter = new RecordSearchAdapter(getActivity(),searchRecords);
+        records_search_listView.setAdapter(recordSearchAdapter);
+
+
+
+        search_et_input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                L.d(s.toString());
+                searchBySomething(s.toString());
+            }
+        });
 
         canclesearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +188,37 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         SearchPopupWindow.setBackgroundDrawable(dw);
 
+        searchOp = SearchOp.NULL;
+
         SearchPopupWindow.showAtLocation(view, Gravity.TOP,0,0);
+    }
+
+    private void searchBySomething(String s) {
+        OnRecordsInitListener onRecordsInitListener = new OnRecordsInitListener() {
+            @Override
+            public void onLoadSuccess(List<Record> recordList) {
+                searchRecords.clear();
+                searchRecords.addAll(recordList);
+                recordSearchAdapter.notifyDataSetChanged();
+                L.d("success recordlist size:"+recordList.size());
+            }
+
+            @Override
+            public void onLoadFailed(String msg) {
+                T.showShort(getActivity(),msg);
+            }
+        };
+        switch (searchOp){
+            case NAME:
+                MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).searchRecordsByName(s,onRecordsInitListener);
+                break;
+            case NUMBER:
+                MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).searchRecordsByNumber(s,onRecordsInitListener);
+                break;
+            case ALL:
+                MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).searchRecordsByAll(s,onRecordsInitListener);
+                break;
+        }
     }
 
     /*
@@ -171,17 +282,35 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.search_name:
-
+                if (searchOp==SearchOp.NAME)
+                    break;
+                searchOp = SearchOp.NAME;
+                searchBySomething(search_et_input.getText().toString());
                 break;
             case R.id.search_telno:
-
+                if (searchOp==SearchOp.NUMBER)
+                    break;
+                searchOp = SearchOp.NUMBER;
+                searchBySomething(search_et_input.getText().toString());
                 break;
             case R.id.search_all:
-
+                if (searchOp==SearchOp.ALL)
+                    break;
+                searchOp = SearchOp.ALL;
+                searchBySomething(search_et_input.getText().toString());
                 break;
             case R.id.search_area:
-
+                if (searchOp==SearchOp.AREA)
+                    break;
+                searchOp = SearchOp.AREA;
+                searchBySomething(search_et_input.getText().toString());
+                break;
+            case R.id.search_iv_delete:
+                search_et_input.setText("");
+                searchRecords.clear();
+                recordSearchAdapter.notifyDataSetChanged();
                 break;
         }
+
     }
 }

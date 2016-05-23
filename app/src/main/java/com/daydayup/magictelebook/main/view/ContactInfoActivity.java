@@ -93,9 +93,9 @@ public class ContactInfoActivity extends BaseAcitivity {
         t.setToNow();
         int hour = t.hour;
         if (hour>=7 && hour<19){
-            backdrop.setImageResource(R.mipmap.testbg);
+            backdrop.setImageResource(android.R.color.holo_blue_dark);
         }else
-            backdrop.setImageResource(R.mipmap.night);
+            backdrop.setImageResource(android.R.color.holo_red_dark);
     }
 
     @Override

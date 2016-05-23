@@ -106,6 +106,7 @@ public class ContactsFragment extends Fragment {
                 mBlacks.clear();
                 mContacts.clear();
                 for (BriefContact briefContact:contactList){
+                    L.d(briefContact.toString());
                     if (briefContact.isBlack()){
                         mBlacks.add(briefContact);
                     }else{

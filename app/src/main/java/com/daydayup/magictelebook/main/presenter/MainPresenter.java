@@ -62,7 +62,20 @@ public class MainPresenter {
         mainModel.initContacts(num,onBriefContactsInitListener);
     }
 
+    public void incrementRecords(int offset,int num,OnRecordsInitListener onRecordsInitListener){
+        mainModel.incrementRecords(offset,num,onRecordsInitListener);
+    }
 
+    public void searchRecordsByName(String name,OnRecordsInitListener onRecordsInitListener){
+        mainModel.searchRecordsByName(name,onRecordsInitListener);
+    }
+    public void searchRecordsByNumber(String number,OnRecordsInitListener onRecordsInitListener){
+        mainModel.searchRecordsByNumber(number,onRecordsInitListener);
+
+    }
+    public void searchRecordsByAll(String searchStr,OnRecordsInitListener onRecordsInitListener){
+        mainModel.searchRecordsByAll(searchStr,onRecordsInitListener);
+    }
 //    /*
 //    @param num:通话记录数量,offset:偏移量
 //    @return void

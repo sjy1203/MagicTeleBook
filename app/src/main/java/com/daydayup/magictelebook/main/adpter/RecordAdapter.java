@@ -144,7 +144,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         L.d("onBindView name" + records.get(position).getName());
         holder.NameView.setText(records.get(position).getName());
         //TODO:
-        holder.PersonImgView.setImageResource((int) records.get(position).getPersonImgId());
+        holder.PersonImgView.setImageResource(R.mipmap.touxiang);
         if (records.get(position).getType().equals("未接")) {
             holder.NameView.setTextColor(Color.rgb(255, 0, 0));
         }

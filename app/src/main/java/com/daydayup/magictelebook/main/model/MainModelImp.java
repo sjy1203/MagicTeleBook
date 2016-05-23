@@ -58,22 +58,22 @@ public class MainModelImp implements IMainModel{
     //TODO:
     @Override
     public void incrementRecords(int offset, int num, OnRecordsInitListener onRecordsInitListener) {
-
+        asyncQueryHandler.startQuery(Token.TOKEN_initRecords,onRecordsInitListener,CallLog.Calls.CONTENT_URI,null,null,null,CallLog.Calls.DATE + " desc"+" limit "+offset+","+num);
     }
 
     @Override
     public void searchRecordsByName(String name, OnRecordsInitListener onRecordsInitListener) {
-
+        asyncQueryHandler.startQuery(Token.TOKEN_initRecords,onRecordsInitListener,CallLog.Calls.CONTENT_URI,null,CallLog.Calls.CACHED_NAME+" LIKE ?",new String[]{"%"+name+"%"},CallLog.Calls.DATE + " desc");
     }
 
     @Override
     public void searchRecordsByNumber(String number, OnRecordsInitListener onRecordsInitListener) {
-
+        asyncQueryHandler.startQuery(Token.TOKEN_initRecords,onRecordsInitListener,CallLog.Calls.CONTENT_URI,null,CallLog.Calls.NUMBER+" LIKE ?",new String[]{"%"+number+"%"},CallLog.Calls.DATE + " desc");
     }
 
     @Override
     public void searchRecordsByAll(String searchStr, OnRecordsInitListener onRecordsInitListener) {
-
+        asyncQueryHandler.startQuery(Token.TOKEN_initRecords,onRecordsInitListener,CallLog.Calls.CONTENT_URI,null,CallLog.Calls.CACHED_NAME+" LIKE ?"+" or "+ CallLog.Calls.NUMBER+" LIKE ?",new String[]{"%"+searchStr+"%","%"+searchStr+"%"},CallLog.Calls.DATE + " desc");
     }
 
 
@@ -166,7 +166,7 @@ public class MainModelImp implements IMainModel{
                 date = TimeUtils.convert_before(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
                 duration = TimeUtils.convert_between(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DURATION)));
                 //TODO:
-                Area = "null";
+                Area = "未知";
                 switch (cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE))){
                     case CallLog.Calls.INCOMING_TYPE:
                         Type = "呼入";break;

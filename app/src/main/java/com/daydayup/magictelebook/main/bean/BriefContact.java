@@ -102,4 +102,9 @@ public class BriefContact implements Serializable{
     public void setWeather(String weather) {
         this.weather = weather;
     }
+
+    @Override
+    public String toString() {
+        return "lookUPkey: "+getLookUpKey()+"\nname: "+name+"\nnumber: "+number+"\nphoteid:"+photoId+"\nsortkey:"+sortKey;
+    }
 }

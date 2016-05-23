@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
-                android:src="@mipmap/testbg"
+                android:src="@android:color/holo_blue_dark"
                 android:clickable="true"
                 app:layout_collapseMode="parallax"
                 />
