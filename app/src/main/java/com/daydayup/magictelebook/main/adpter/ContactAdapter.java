@@ -12,7 +12,10 @@ import com.daydayup.magictelebook.main.bean.BriefContact;
 import com.daydayup.magictelebook.main.bean.Contact;
 import com.daydayup.magictelebook.main.callback.IContactViewHolderClicks;
 import com.daydayup.magictelebook.main.view.ContactInfoActivity;
+import com.daydayup.magictelebook.main.view.ContactInfoMixActivity;
+import com.daydayup.magictelebook.main.view.ContactShowFragment;
 import com.daydayup.magictelebook.util.L;
+import com.daydayup.magictelebook.weather.WeatherInfo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -47,8 +50,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
             @Override
             public void onItemClick() {
                 BriefContact contactdata = contacts.get(viewType);
-                Intent intent = new Intent(mContext, ContactInfoActivity.class);
-                intent.putExtra("contactdata",contactdata);
+                Intent intent = new Intent(mContext, ContactInfoMixActivity.class);
+                intent.putExtra(ContactShowFragment.KEY_BRIEFCONTACT,contactdata);
+                intent.putExtra(ContactInfoMixActivity.INTENT_STATUS,ContactInfoMixActivity.STATUS_SHOW);
                 mContext.startActivity(intent);
                 L.d(contacts.get(viewType).getName()+" cardview is clicked");
             }
@@ -69,17 +73,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
             area = getArea();
             contacts.get(position).setArea(area);
         }
-
-        String weather = contacts.get(position).getWeather();
-        if (weather==null){
+        WeatherInfo weatherInfo = contacts.get(position).getWeatherInfo();
+        if (weatherInfo==null) return;
+        String weather = weatherInfo.getWeatherStatus();
+        if ( weather==null){
             weather = getWeather();
-            contacts.get(position).setWeather(weather);
+            weatherInfo.setWeatherStatus(weather);
         }
 
-        String temperature = contacts.get(position).getTemperature();
-        if (temperature==null){
+        String temperature = weatherInfo.getTemperature();
+        if ( temperature==null){
             temperature = getTemperature();
-            contacts.get(position).setTemperature(temperature);
+            weatherInfo.setTemperature(temperature);
         }
         holder.InfoView.setText(String.format("%s %s %s",area,weather,temperature));
     }

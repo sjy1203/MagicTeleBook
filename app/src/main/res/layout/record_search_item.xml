@@ -1,92 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:contentPadding="2dp"
-    app:cardElevation="2dp"
+    android:padding="6dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/white"
-    android:foreground="?attr/selectableItemBackground"
-    android:stateListAnimator="@drawable/card_touch_raise"
-    android:id="@+id/record_search_card_view"
+    android:background="@color/white"
+    android:id="@+id/record_card_view"
     >
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:id="@+id/person_img"
-            android:src="@mipmap/touxiang"
-            android:layout_marginLeft="5dp"
-            android:layout_margin="2dp"
-            app:civ_border_color="@color/tabTextSelectedColor"
-            app:civ_border_width="1dp"
-            />
+        <FrameLayout
+            android:id="@+id/person_rl"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/person_img"
+                android:src="@mipmap/touxiang"
+                android:layout_margin="2dp"
+                app:civ_border_color="@color/tabTextSelectedColor"
+                app:civ_border_width="1dp"
+                />
+            <TextView
+                android:id="@+id/person_tv"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="26dp"
             android:id="@+id/person_name"
             android:text="姓名"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:gravity="bottom"
-            android:layout_toEndOf="@id/person_img"
-            android:layout_toRightOf="@id/person_img"
+            android:layout_toRightOf="@id/person_rl"
             android:layout_marginLeft="10dp"
+
             />
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:id="@+id/person_telno"
             android:text="13778751267"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:gravity="bottom"
             android:layout_toRightOf="@+id/person_name"
-            android:layout_marginLeft="2dp"
+            android:layout_alignBottom="@id/person_name"
+            android:layout_marginLeft="4dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:id="@+id/contact_type"
+            android:text="来电"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            android:layout_below="@+id/person_name"
+            android:layout_alignLeft="@+id/person_name"
+            android:gravity="center"
+            android:layout_alignBottom="@+id/person_rl"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="16dp"
-            android:id="@+id/contact_type"
-            android:text="来电,"
+            android:text=","
+            android:textColor="@color/gray"
             android:textSize="12sp"
-            android:layout_below="@+id/person_name"
-            android:layout_toEndOf="@+id/person_img"
-            android:layout_toRightOf="@+id/person_img"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            />
+            android:id="@+id/divide1"
+            android:layout_below="@id/person_name"
+            android:layout_toRightOf="@+id/contact_type"
+            android:layout_alignBottom="@+id/contact_type"
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="16dp"
             android:id="@+id/contact_area"
-            android:text="四川遂宁,"
-            android:textSize="12sp"
+            android:text="四川遂宁"
+            android:textSize="13sp"
+            android:textColor="@color/gray"
             android:layout_below="@id/person_name"
-            android:layout_toEndOf="@+id/contact_type"
-            android:layout_toRightOf="@+id/contact_type"
+            android:layout_toRightOf="@+id/divide1"
+            android:layout_alignBottom="@id/divide1"
             android:gravity="center"
             />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:text=","
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            android:id="@+id/divide2"
+            android:layout_below="@id/person_name"
+            android:layout_toRightOf="@+id/contact_area"
+            android:layout_alignBottom="@+id/contact_type"
+            android:gravity="center"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="16dp"
             android:id="@+id/contact_time"
             android:text="16/5/6星期五"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:layout_below="@id/person_name"
-            android:layout_toEndOf="@+id/contact_area"
-            android:layout_toRightOf="@+id/contact_area"
+            android:layout_toRightOf="@id/divide2"
+            android:layout_alignBottom="@id/contact_area"
             android:gravity="center"
             />
-
     </RelativeLayout>
-</android.support.v7.widget.CardView>
+</FrameLayout>
 
 

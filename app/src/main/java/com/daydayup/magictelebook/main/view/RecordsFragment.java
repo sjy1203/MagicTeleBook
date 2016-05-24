@@ -1,6 +1,7 @@
 package com.daydayup.magictelebook.main.view;
 
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.adpter.RecordAdapter;
 import com.daydayup.magictelebook.main.adpter.RecordSearchAdapter;
+import com.daydayup.magictelebook.main.bean.BriefContact;
 import com.daydayup.magictelebook.main.bean.Record;
 import com.daydayup.magictelebook.main.callback.OnRecordsInitListener;
 import com.daydayup.magictelebook.main.presenter.MainPresenter;
@@ -152,7 +155,22 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
         records_search_listView = (ListView) SearchWindowView.findViewById(R.id.records_search_listView);
         recordSearchAdapter = new RecordSearchAdapter(getActivity(),searchRecords);
         records_search_listView.setAdapter(recordSearchAdapter);
-
+        records_search_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ContactInfoMixActivity.class);
+                BriefContact briefContact = new BriefContact();
+                Record record = records.get(position);
+                briefContact.setBlack(false);
+                briefContact.setBirth("");
+                briefContact.setNumber(record.getTelno());
+                briefContact.setName(record.getName());
+                briefContact.setArea(record.getArea());
+                intent.putExtra(ContactRecordFragment.KEY_BRIEFCONTACT,briefContact);
+                intent.putExtra(ContactInfoMixActivity.INTENT_STATUS,ContactInfoMixActivity.STATUS_RECORD);
+                getActivity().startActivity(intent);
+            }
+        });
 
 
         search_et_input.addTextChangedListener(new TextWatcher() {

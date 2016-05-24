@@ -110,8 +110,8 @@ public class ContactInfoActivity extends BaseAcitivity {
         personImg.setImageResource(R.mipmap.touxiang);
         personArea.setText(contactdata.getArea());
         contactArea.setText(contactdata.getArea());
-        personWeather.setText(contactdata.getWeather());
-        personTemp.setText(contactdata.getTemperature());
+      //  personWeather.setText(contactdata.getWeather());
+   //     personTemp.setText(contactdata.getTemperature());
         personTel.setText(contactdata.getNumber());
         if(contactdata.isBlack()){
             IsBlack.setText("解除黑名单");

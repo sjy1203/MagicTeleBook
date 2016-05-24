@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.callback.IContactViewHolderClicks;
 import com.daydayup.magictelebook.util.MarqueeText;
+import com.hp.hpl.sparta.Text;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,6 +22,7 @@ public class ContactViewHolder extends RecyclerView.ViewHolder implements View.O
     MarqueeText InfoView;
     IContactViewHolderClicks mListener;
     CardView cardView;
+    TextView personTv;
 
     public ContactViewHolder(View itemView, IContactViewHolderClicks listener) {
         super(itemView);
@@ -30,6 +32,7 @@ public class ContactViewHolder extends RecyclerView.ViewHolder implements View.O
         mListener = listener;
         cardView = (CardView) itemView.findViewById(R.id.contact_card_view);
         cardView.setOnClickListener(this);
+        personTv = (TextView) itemView.findViewById(R.id.person_tv);
     }
 
     @Override
