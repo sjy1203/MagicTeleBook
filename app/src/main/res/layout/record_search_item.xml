@@ -8,7 +8,7 @@
     app:cardBackgroundColor="@color/white"
     android:foreground="?attr/selectableItemBackground"
     android:stateListAnimator="@drawable/card_touch_raise"
-    android:id="@+id/record_card_view"
+    android:id="@+id/record_search_card_view"
     >
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
@@ -16,21 +16,22 @@
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:id="@+id/person_img"
             android:src="@mipmap/touxiang"
             android:layout_marginLeft="5dp"
+            android:layout_margin="2dp"
             app:civ_border_color="@color/tabTextSelectedColor"
             app:civ_border_width="1dp"
             />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="32dp"
             android:id="@+id/person_name"
             android:text="姓名"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:gravity="bottom"
             android:layout_toEndOf="@id/person_img"
@@ -39,10 +40,10 @@
             />
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="32dp"
             android:id="@+id/person_telno"
             android:text="13778751267"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:gravity="bottom"
             android:layout_toRightOf="@+id/person_name"
             android:layout_marginLeft="2dp"
@@ -50,10 +51,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="16dp"
             android:id="@+id/contact_type"
             android:text="来电,"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:layout_below="@+id/person_name"
             android:layout_toEndOf="@+id/person_img"
             android:layout_toRightOf="@+id/person_img"
@@ -63,10 +64,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="16dp"
             android:id="@+id/contact_area"
             android:text="四川遂宁,"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:layout_below="@id/person_name"
             android:layout_toEndOf="@+id/contact_type"
             android:layout_toRightOf="@+id/contact_type"
@@ -75,10 +76,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="16dp"
             android:id="@+id/contact_time"
             android:text="16/5/6星期五"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:layout_below="@id/person_name"
             android:layout_toEndOf="@+id/contact_area"
             android:layout_toRightOf="@+id/contact_area"

@@ -15,7 +15,7 @@ import java.util.TimerTask;
 
 public class SplashActivity extends BaseAcitivity {
 
-    private static final int SHOW_TIME_MIN = 2000;
+    private static final int SHOW_TIME_MIN = 4000;
     Timer timer;
     @Override
     protected void initView() {

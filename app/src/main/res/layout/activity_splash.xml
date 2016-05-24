@@ -4,36 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@mipmap/welcome_1"
     tools:context="com.daydayup.magictelebook.SplashActivity">
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@mipmap/touxiang1"
-        android:layout_width="120dp"
-        android:layout_height="120dp" />
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/logo"
-        android:id="@+id/appName"
-        android:layout_marginTop="8dp"
-        android:textSize="14sp"
-        android:text="MagicTeleBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_below="@id/appName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
-        android:background="@android:color/darker_gray"
-        android:layout_width="126dp"
-        android:layout_height="1dp"></View>
 
     <TextView
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:text="©2016-2017 AndroidDayDayUp, Inc. All rights reserved"
+        android:textSize="12sp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
