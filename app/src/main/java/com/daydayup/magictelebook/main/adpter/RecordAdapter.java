@@ -21,9 +21,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.daydayup.magictelebook.R;
+import com.daydayup.magictelebook.main.bean.BriefContact;
 import com.daydayup.magictelebook.main.bean.Record;
 import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicks;
 import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicksAddMore;
+import com.daydayup.magictelebook.main.view.ContactInfoMixActivity;
+import com.daydayup.magictelebook.main.view.ContactRecordFragment;
 import com.daydayup.magictelebook.util.BottomDialog;
 import com.daydayup.magictelebook.util.L;
 
@@ -144,7 +147,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         L.d("onBindView name" + records.get(position).getName());
         holder.NameView.setText(records.get(position).getName());
         //TODO:
-        holder.PersonImgView.setImageResource(R.mipmap.touxiang);
+        holder.PersonImgView.setImageResource(R.mipmap.touxiang1);
         if (records.get(position).getType().equals("未接")) {
             holder.NameView.setTextColor(Color.rgb(255, 0, 0));
         }
@@ -197,6 +200,17 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(mContext, ContactInfoMixActivity.class);
+                BriefContact briefContact = new BriefContact();
+                Record record = records.get(getPosition(viewType));
+                briefContact.setBlack(false);
+                briefContact.setBirth("");
+                briefContact.setNumber(record.getTelno());
+                briefContact.setName(record.getName());
+                briefContact.setArea(record.getArea());
+                intent.putExtra(ContactRecordFragment.KEY_BRIEFCONTACT,briefContact);
+                intent.putExtra(ContactInfoMixActivity.INTENT_STATUS,ContactInfoMixActivity.STATUS_RECORD);
+                mContext.startActivity(intent);
                 //showEditPopupWindow(parent,windowView,viewType);
             }
         });

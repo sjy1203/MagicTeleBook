@@ -2,6 +2,7 @@ package com.daydayup.magictelebook.main.view;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -48,7 +49,7 @@ public class ContactsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_contacts, container, false);
@@ -91,7 +92,9 @@ public class ContactsFragment extends Fragment {
         mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                L.d("add is clicked");
+                Intent intent = new Intent(getActivity(),ContactInfoMixActivity.class);
+                intent.putExtra(ContactInfoMixActivity.INTENT_STATUS,ContactInfoMixActivity.STATUS_EDIT);
+                startActivity(intent);
             }
         });
         initContacts();

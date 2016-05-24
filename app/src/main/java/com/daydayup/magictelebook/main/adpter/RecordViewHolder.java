@@ -30,10 +30,11 @@ public class RecordViewHolder extends RecyclerView.ViewHolder implements View.On
     CardView cardView;
     IRecordViewHolderClicks mListener;
     IRecordViewHolderClicksAddMore mListener1;
-
+    TextView personTv;
 
     public RecordViewHolder(View itemView,IRecordViewHolderClicks listener) {
         super(itemView);
+        personTv = (TextView) itemView.findViewById(R.id.person_tv);
         NameView = (TextView) itemView.findViewById(R.id.person_name);
         PersonImgView = (CircleImageView) itemView.findViewById(R.id.person_img);
         //TelnoView = (TextView) itemView.findViewById(R.id.person_telno);

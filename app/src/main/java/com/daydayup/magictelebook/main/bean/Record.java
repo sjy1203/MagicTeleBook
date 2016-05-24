@@ -2,6 +2,8 @@ package com.daydayup.magictelebook.main.bean;
 
 import android.provider.ContactsContract;
 
+import com.daydayup.magictelebook.util.C2pingyin;
+
 /**
  * Created by Jallen on 2016/5/8.
  */
@@ -14,6 +16,7 @@ public class Record {
     private String Duration;//通话时间
     private long PersonImgId;// 用户缩略图(查询值)
     private String Date;
+    private String pingyin;
 
     public Record(String _ID,String Name,String Telno,String Type,String Area,String Duration,String Date,
                   long PersonImgId){
@@ -49,6 +52,7 @@ public class Record {
 
     public void setName(String name) {
         Name = name;
+        setPingyin(C2pingyin.converterToFirstSpell(name));
     }
 
     public void setPersonImgId(long personImgId) {
@@ -75,7 +79,6 @@ public class Record {
         return Area;
     }
 
-
     public String getType() {
         return Type;
     }
@@ -95,5 +98,13 @@ public class Record {
     @Override
     public String toString() {
         return "name: "+getName()+"\nlkid: "+get_ID()+"\ntype: "+getType()+"\nduration: "+getDuration()+"\ndate: "+getDate()+"\nimgid: "+getPersonImgId()+"area: "+getArea();
+    }
+
+    public String getPingyin() {
+        return pingyin;
+    }
+
+    public void setPingyin(String pingyin) {
+        this.pingyin = pingyin;
     }
 }

@@ -1,5 +1,8 @@
 package com.daydayup.magictelebook.main.bean;
 
+import com.daydayup.magictelebook.util.C2pingyin;
+import com.daydayup.magictelebook.weather.WeatherInfo;
+
 import java.io.Serializable;
 
 /**
@@ -13,14 +16,23 @@ public class BriefContact implements Serializable{
     String number;
     Long photoId;
     String sortKey;
+    String pingyin;
+    String birth;
 
-    String area = null;
-    String temperature = null;
-    String weather = null;
+    String area ;
+    WeatherInfo weatherInfo = null;
 
     boolean isBlack = false;
     public BriefContact(){
 
+    }
+
+    public WeatherInfo getWeatherInfo() {
+        return weatherInfo;
+    }
+
+    public void setWeatherInfo(WeatherInfo weatherInfo) {
+        this.weatherInfo = weatherInfo;
     }
 
     public boolean isBlack() {
@@ -87,20 +99,20 @@ public class BriefContact implements Serializable{
         this.area = area;
     }
 
-    public String getTemperature() {
-        return temperature;
+    public String getPingyin() {
+        return pingyin;
     }
 
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
+    public void setPingyin(String pingyin) {
+        this.pingyin = pingyin;
     }
 
-    public String getWeather() {
-        return weather;
+    public String getBirth() {
+        return birth;
     }
 
-    public void setWeather(String weather) {
-        this.weather = weather;
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 
     @Override

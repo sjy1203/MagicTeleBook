@@ -55,16 +55,17 @@ public class RecordSearchAdapter extends BaseAdapter {
             viewHolder.TypeView = (TextView) convertView.findViewById(R.id.contact_type);
             viewHolder.AreaView = (TextView) convertView.findViewById(R.id.contact_area);
             viewHolder.TimeView = (TextView) convertView.findViewById(R.id.contact_time);
+            viewHolder.personTv = (TextView) convertView.findViewById(R.id.person_tv);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.NameView.setText(mRecords.get(position).getName());
         //TODO:
-        viewHolder.PersonImgView.setImageResource(R.mipmap.touxiang);
+        viewHolder.PersonImgView.setImageResource(R.mipmap.touxiang1);
         viewHolder.TelnoView.setText(mRecords.get(position).getTelno());
-        viewHolder.TypeView.setText(mRecords.get(position).getType()+",");
-        viewHolder.AreaView.setText(mRecords.get(position).getArea()+",");
+        viewHolder.TypeView.setText(mRecords.get(position).getType());
+        viewHolder.AreaView.setText(mRecords.get(position).getArea());
         viewHolder.TimeView.setText(mRecords.get(position).getDate());
         return  convertView;
     }
@@ -76,5 +77,6 @@ public class RecordSearchAdapter extends BaseAdapter {
         public TextView TypeView;
         public TextView AreaView;
         public TextView TimeView;
+        public TextView personTv;
     }
 }
