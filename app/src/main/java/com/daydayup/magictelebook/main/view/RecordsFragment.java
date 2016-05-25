@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -134,12 +135,14 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
         SegmentedGroup segmentedSearchGroup = (SegmentedGroup) SearchWindowView.findViewById(R.id.segmented4);
         segmentedSearchGroup.setTintColor(getResources().getColor(R.color.lightblue));
 
-        Button search_name,search_telno,search_area,search_all;ImageView search_iv_delete;
+        RadioButton search_name,search_telno,search_area,search_all;
+        ImageView search_iv_delete;
         search_iv_delete = (ImageView) SearchWindowView.findViewById(R.id.search_iv_delete);
-        search_name = (Button) SearchWindowView.findViewById(R.id.search_name);
-        search_telno = (Button) SearchWindowView.findViewById(R.id.search_telno);
-        search_area = (Button) SearchWindowView.findViewById(R.id.search_area);
-        search_all = (Button) SearchWindowView.findViewById(R.id.search_all);
+        search_name = (RadioButton) SearchWindowView.findViewById(R.id.search_name);
+        search_telno = (RadioButton) SearchWindowView.findViewById(R.id.search_telno);
+        search_area = (RadioButton) SearchWindowView.findViewById(R.id.search_area);
+        search_all = (RadioButton) SearchWindowView.findViewById(R.id.search_all);
+        search_all.setChecked(true);
         search_name.setOnClickListener(this);
         search_telno.setOnClickListener(this);
         search_area.setOnClickListener(this);
