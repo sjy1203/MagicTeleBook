@@ -380,10 +380,4 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
     }
 
 
-    @Override
-    public void finish() {
-        if(inEdit) setResult(1);
-        else setResult(0);
-        super.finish();
-    }
 }
