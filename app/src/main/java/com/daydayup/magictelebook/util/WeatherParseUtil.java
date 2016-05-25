@@ -35,7 +35,8 @@ public class WeatherParseUtil {
         protected WeatherInfo doInBackground(String... params) {
             WeatherInfo weatherInfo = new WeatherInfo();
             try {
-                JSONObject jsonObject = new JSONObject(HttpUtils.getJsonContent(params[0]));
+                String str = HttpUtils.getJsonContent(params[0]);
+                JSONObject jsonObject = new JSONObject(str);
                 JSONObject data = jsonObject.getJSONObject("data");
                 weatherInfo.setTemperature(data.getString("wendu"));
                 weatherInfo.setGanmao(data.getString("ganmao"));
@@ -50,7 +51,7 @@ public class WeatherParseUtil {
                 weatherInfo.setWindDirection(resJson.getString("fengxiang"));
                 weatherInfo.setWindPower(resJson.getString("fengli"));
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 onWeatherInfoListener.onFail(e.getMessage().toString());
             }

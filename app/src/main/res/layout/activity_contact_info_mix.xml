@@ -76,7 +76,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="多云转大雨"
+
                     android:textSize="16sp"
                     android:textColor="@color/white"
                     android:id="@+id/contact_weather"
@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30º"
+
                     android:textSize="64sp"
                     android:textColor="@color/white"
                     android:id="@+id/contact_temp"

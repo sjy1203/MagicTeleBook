@@ -22,6 +22,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginLeft="20dp" />
             <EditText
+                android:textSize="15sp"
+
                 android:id="@+id/person_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -50,6 +52,8 @@
                 android:layout_marginLeft="20dp"
                 />
             <EditText
+                android:textSize="15sp"
+
                 android:id="@+id/person_telno"
                 android:layout_marginRight="8dp"
                 android:layout_width="match_parent"
@@ -72,7 +76,7 @@
                 android:id="@+id/areatext"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="地区 "
+                android:text="城市 "
                 android:textColor="@color/lightblue"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="20dp"
@@ -82,7 +86,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginRight="8dp"
-                android:hint="格式:  省份;城市"
+                android:textSize="15sp"
+                android:hint="格式:  城市名"
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:layout_alignParentTop="true"
@@ -106,6 +111,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginLeft="20dp" />
             <EditText
+                android:textSize="15sp"
+
                 android:id="@+id/person_birth"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

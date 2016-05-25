@@ -23,10 +23,13 @@ import android.widget.TextView;
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.BriefContact;
 import com.daydayup.magictelebook.main.bean.Record;
+import com.daydayup.magictelebook.main.callback.DefaultListener;
 import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicks;
 import com.daydayup.magictelebook.main.callback.IRecordViewHolderClicksAddMore;
+import com.daydayup.magictelebook.main.presenter.MainPresenter;
 import com.daydayup.magictelebook.main.view.ContactInfoMixActivity;
 import com.daydayup.magictelebook.main.view.ContactRecordFragment;
+import com.daydayup.magictelebook.main.view.IMainView;
 import com.daydayup.magictelebook.util.BottomDialog;
 import com.daydayup.magictelebook.util.L;
 
@@ -45,11 +48,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
     private final static int REQUEST_CODE_ASK_CALL_PHONE = 123;
     private Context mContext;
     private List<Record> records;
+    private int[] photeId;
 
     public RecordAdapter(List<Record> recordList, Context context) {
         L.d("list size" + recordList.size());
         records = recordList;
         mContext = context;
+        photeId = new int[]{R.mipmap.touxiang,R.mipmap.touxiang1,R.mipmap.touxiang2,R.mipmap.touxiang3,R.mipmap.touxiang4,R.mipmap.touxiang5,R.mipmap.touxiang6,R.mipmap.touxiang7,R.mipmap.touxiang8,R.mipmap.touxiang9,R.mipmap.touxiang10,R.mipmap.touxiang11};
+
     }
 
     @Override
@@ -147,7 +153,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         L.d("onBindView name" + records.get(position).getName());
         holder.NameView.setText(records.get(position).getName());
         //TODO:
-        holder.PersonImgView.setImageResource(R.mipmap.touxiang1);
+        holder.PersonImgView.setImageResource(photeId[position%12]);
         if (records.get(position).getType().equals("未接")) {
             holder.NameView.setTextColor(Color.rgb(255, 0, 0));
         }
@@ -203,6 +209,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
                 Intent intent = new Intent(mContext, ContactInfoMixActivity.class);
                 BriefContact briefContact = new BriefContact();
                 Record record = records.get(getPosition(viewType));
+                long rawContactid = MainPresenter.getInstance(mContext, (IMainView) mContext).getRawContactId(record.get_ID());
+                L.d("rawContactId" + rawContactid);
+                briefContact.setRawContactId(rawContactid);
                 briefContact.setBlack(false);
                 briefContact.setBirth("");
                 briefContact.setNumber(record.getTelno());
@@ -255,7 +264,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
         }
     }
 
-    private void showEditDialog(Context context, final int viewType){
+    private void showEditDialog(final Context context, final int viewType){
         BottomDialog.Builder builder = new BottomDialog.Builder(context);
         builder.setActionTouch("取消", new DialogInterface.OnClickListener() {
             @Override
@@ -263,7 +272,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
                 dialog.dismiss();
             }
         });
-        builder.setItem1Touch("加入黑名单", new DialogInterface.OnClickListener() {
+        builder.setItem1Touch("---", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -274,7 +283,21 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordViewHolder> {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                L.d(records.get(getPosition(viewType)).getName()+"is deleted");
+                Record record = records.get(getPosition(viewType));
+                MainPresenter.getInstance(mContext, (IMainView) mContext).deleteRecordFromSys(record.get_ID(), new DefaultListener() {
+                    @Override
+                    public void onSuccess(String msg) {
+                        L.d(records.get(getPosition(viewType)).getName()+"is deleted" + msg);
+                        records.remove(getPosition(viewType));
+                        notifyItemRemoved(getPosition(viewType));
+                    }
+
+                    @Override
+                    public void onFailed(String msg) {
+                        L.d(records.get(getPosition(viewType)).getName()+"deleted failed" + msg);
+                    }
+                });
+
             }
         });
         builder.create().show();

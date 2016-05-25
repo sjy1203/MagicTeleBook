@@ -39,12 +39,15 @@
                 android:layout_height="wrap_content" />
         </FrameLayout>
 
-        <TextView
+        <com.daydayup.magictelebook.util.MarqueeText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/person_name"
             android:text="暮春生"
             android:textSize="16sp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:paddingTop="5dp"

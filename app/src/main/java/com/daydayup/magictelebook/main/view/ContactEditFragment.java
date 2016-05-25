@@ -1,9 +1,11 @@
 package com.daydayup.magictelebook.main.view;
 
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,12 @@ import android.widget.TextView;
 
 import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.bean.BriefContact;
+import com.daydayup.magictelebook.main.callback.DefaultListener;
+import com.daydayup.magictelebook.main.callback.OnSelectContactListener;
+import com.daydayup.magictelebook.main.presenter.MainPresenter;
 import com.daydayup.magictelebook.util.CustomDialog;
+import com.daydayup.magictelebook.util.L;
+import com.daydayup.magictelebook.util.T;
 
 /**
  * Created by Jay on 16/5/24.
@@ -52,7 +59,39 @@ public class ContactEditFragment extends Fragment {
 
         IsBlack = (TextView) view.findViewById(R.id.addtoblack);
         deleteContact = (TextView) view.findViewById(R.id.deleteContact);
+        deleteContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (briefContact.getRawContactId()!=0){
+                    MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).deleteContactFromSqlite(briefContact, new DefaultListener() {
+                        @Override
+                        public void onSuccess(String msg) {
 
+                        }
+
+                        @Override
+                        public void onFailed(String msg) {
+
+                        }
+                    });
+                    MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).deleteContactSys(briefContact.getRawContactId(), new DefaultListener() {
+                        @Override
+                        public void onSuccess(String msg) {
+
+                        }
+
+                        @Override
+                        public void onFailed(String msg) {
+
+                        }
+                    });
+                    getActivity().finish();
+                }else {
+                    T.showShort(getActivity(),"操作失败");
+                }
+
+            }
+        });
         if(briefContact.isBlack()){
             IsBlack.setText("解除黑名单");
             IsBlack.setTextColor(getResources().getColor(R.color.lightblue));
@@ -113,13 +152,60 @@ public class ContactEditFragment extends Fragment {
         return view;
     }
 
-    public BriefContact commit(){
+    public BriefContact commit(Bitmap bitmap){
 
         briefContact.setName(person_name.getText().toString());
         briefContact.setNumber(person_telno.getText().toString());
         briefContact.setArea(person_area.getText().toString());
         briefContact.setBirth(person_birth.getText().toString());
-        //TODO:
+
+
+        //commit to sqlite
+        MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).replaceContactFromSqlite(briefContact, bitmap, new DefaultListener() {
+            @Override
+            public void onSuccess(String msg) {
+                L.d(msg);
+
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                L.d( msg);
+            }
+        });
+        //commit to sys
+        if (briefContact.getRawContactId()==0){
+            //insert
+            L.d("insert"+briefContact.getRawContactId());
+            MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).insertContactSys(briefContact, new DefaultListener() {
+                @Override
+                public void onSuccess (String msg){
+                    L.d("insert sys contact success" + msg);
+                }
+
+                @Override
+                public void onFailed (String msg){
+                    L.d("insert sys contact failed" + msg);
+                }
+            });
+        }else{
+            //update
+            L.d("update"+briefContact.getRawContactId());
+            MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).updateContactSys(briefContact, new DefaultListener() {
+                @Override
+                public void onSuccess(String msg) {
+                    L.d("update sys contact success" + msg);
+                }
+
+                @Override
+                public void onFailed(String msg) {
+                    L.d("update sys contact failed" + msg);
+                }
+
+            });
+        }
+
+
         return briefContact;
     }
 

@@ -158,6 +158,9 @@ public class RecordsFragment extends Fragment implements View.OnClickListener{
                 Intent intent = new Intent(getActivity(), ContactInfoMixActivity.class);
                 BriefContact briefContact = new BriefContact();
                 Record record = records.get(position);
+                long rawContactid = MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).getRawContactId(record.get_ID());
+                L.d("rawContactId" + rawContactid);
+                briefContact.setRawContactId(rawContactid);
                 briefContact.setBlack(false);
                 briefContact.setBirth("");
                 briefContact.setNumber(record.getTelno());

@@ -15,6 +15,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +26,13 @@ import com.daydayup.magictelebook.R;
 import com.daydayup.magictelebook.main.adpter.ContactAdapter;
 import com.daydayup.magictelebook.main.adpter.RecordAdapter;
 import com.daydayup.magictelebook.main.bean.BriefContact;
+import com.daydayup.magictelebook.main.callback.OnSelectContactListener;
+import com.daydayup.magictelebook.main.presenter.MainPresenter;
 import com.daydayup.magictelebook.util.BottomDialog;
+import com.daydayup.magictelebook.util.L;
+import com.daydayup.magictelebook.util.T;
+import com.daydayup.magictelebook.util.WeatherParseUtil;
+import com.daydayup.magictelebook.weather.WeatherInfo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -50,10 +58,17 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
     public static final int STATUS_SHOW = 2;
     public static final int STATUS_RECORD = 3;
 
+
     //fragment
     private ContactShowFragment contactShowFragment = null;
     private ContactEditFragment contactEditFragment = null;
     private ContactRecordFragment contactRecordFragment = null;
+
+    //flag
+    private boolean inEdit = false;
+
+    //img
+    Bitmap imgStore = null;
 
     @Override
     protected void initView() {
@@ -89,29 +104,83 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
 
 
     private void initFragment() {
-        Intent intent = getIntent();
-        int status = intent.getIntExtra(INTENT_STATUS,-1);
+        final Intent intent = getIntent();
+        final int status = intent.getIntExtra(INTENT_STATUS,-1);
         if (status==-1) return;
-        switch (status){
-            case STATUS_SHOW:
-                showFragment(intent.getSerializableExtra(ContactShowFragment.KEY_BRIEFCONTACT));
-                break;
-            case STATUS_EDIT:
-                if (intent.getSerializableExtra(ContactEditFragment.KEY_BRIEFCONTACT)==null){
-                    editFragment(null);
-                }else{
-                    editFragment(intent.getSerializableExtra(ContactEditFragment.KEY_BRIEFCONTACT));
+
+        if (intent.getSerializableExtra(ContactShowFragment.KEY_BRIEFCONTACT)!=null){
+            final BriefContact briefContact1 = (BriefContact) intent.getSerializableExtra(ContactShowFragment.KEY_BRIEFCONTACT);
+            MainPresenter.getInstance(this,this).selectContactFromSqlite(briefContact1.getNumber(), new OnSelectContactListener() {
+                @Override
+                public void onSuccess(BriefContact briefContact, Bitmap bitmap) {
+                    if (bitmap!=null) personImg.setImageBitmap(bitmap);
+                    briefContact1.setBlack(briefContact.isBlack());
+                    briefContact1.setArea(briefContact.getArea());
+                    briefContact1.setBirth(briefContact.getBirth());
+
+                    switch (status){
+                        case STATUS_SHOW:
+                            showFragment(briefContact1);
+                            break;
+                        case STATUS_EDIT:
+//                            if (intent.getSerializableExtra(ContactEditFragment.KEY_BRIEFCONTACT)==null){
+//                                editFragment(null);
+//                            }else{
+                                editFragment(briefContact1);
+//                            }
+                            break;
+                        case STATUS_RECORD:
+                            recordFragment(briefContact1);
+                            break;
+                    }
+                    //天气获取
+                    if (!TextUtils.isEmpty(briefContact1.getArea()))
+                        WeatherParseUtil.parseWeather(ContactInfoMixActivity.this, briefContact1.getArea(), new WeatherParseUtil.OnWeatherInfoListener() {
+                            @Override
+                            public void onSuccess(WeatherInfo weatherInfo) {
+                                briefContact1.setWeatherInfo(weatherInfo);
+                                personTemp.setText(weatherInfo.getTemperature()+"º");
+                                personWeather.setText(weatherInfo.getWeatherStatus());
+                            }
+
+                            @Override
+                            public void onFail(String msg) {
+
+                            }
+                        });
                 }
-                break;
-            case STATUS_RECORD:
-                recordFragment(intent.getSerializableExtra(ContactShowFragment.KEY_BRIEFCONTACT));
-                break;
+
+                @Override
+                public void onFailed(String msg) {
+                    switch (status){
+                        case STATUS_SHOW:
+                            showFragment(briefContact1);
+                            break;
+                        case STATUS_EDIT:
+//                            if (intent.getSerializableExtra(ContactEditFragment.KEY_BRIEFCONTACT)==null){
+//                                editFragment(null);
+//                            }else{
+                            editFragment(briefContact1);
+//                            }
+                            break;
+                        case STATUS_RECORD:
+                            recordFragment(briefContact1);
+                            break;
+                    }
+                }
+            });
+        }else{
+            editFragment(null);
         }
+
+
+
     }
 
     private void recordFragment(final Serializable serializable) {
         //commonviews
         initCommonView((BriefContact) serializable);
+        fab.setImageResource(R.drawable.edit1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,11 +200,13 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
     }
 
     private void editFragment(Serializable serializable) {
+        inEdit = true;
         contactEditFragment = new ContactEditFragment();
+        fab.setImageResource(R.drawable.ok);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFragment(contactEditFragment.commit());
+                showFragment(contactEditFragment.commit(imgStore));
             }
         });
         if (serializable==null) serializable = new BriefContact();
@@ -155,6 +226,7 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
     private void showFragment(final Serializable serializable) {
         //commonviews
         initCommonView((BriefContact) serializable);
+        fab.setImageResource(R.drawable.edit1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,8 +246,12 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
     }
     private void initCommonView(final BriefContact briefContact) {
 
-
-        layout.setTitle(briefContact.getName());
+        if (briefContact.getName()==null){
+            layout.setTitle(" ");
+            L.d("name null");
+        }else{
+            layout.setTitle(briefContact.getName());
+        }
         contactArea.setText(briefContact.getArea());
         personImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,17 +260,26 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
             }
         });
 
-        if (briefContact.getWeatherInfo()!=null){
-            personWeather.setText(briefContact.getWeatherInfo().getWeatherStatus());
-            personTemp.setText(briefContact.getWeatherInfo().getTemperature());
-        }
+//        if (briefContact.getWeatherInfo()!=null){
+//            personWeather.setText(briefContact.getWeatherInfo().getWeatherStatus());
+//            personTemp.setText(briefContact.getWeatherInfo().getTemperature());
+//        }else{
+//            personWeather.setText(" ");
+//            personTemp.setText(" ");
+//        }
 
 
         setBackGround();
     }
 
     private void setBackGround() {
-
+        Time t=new Time();
+        t.setToNow();
+        int hour = t.hour;
+        if (hour>=7 && hour<19){
+            backdrop.setImageResource(R.drawable.day);
+        }else
+            backdrop.setImageResource(R.drawable.night1);
     }
 
     @Override
@@ -279,7 +364,7 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] b = stream.toByteArray();
-
+            imgStore = photo;
             personImg.setImageDrawable(drawable);
         }
     }
@@ -292,5 +377,13 @@ public class ContactInfoMixActivity extends BaseAcitivity implements IMainView{
     @Override
     public ContactAdapter getContactAdapter() {
         return null;
+    }
+
+
+    @Override
+    public void finish() {
+        if(inEdit) setResult(1);
+        else setResult(0);
+        super.finish();
     }
 }

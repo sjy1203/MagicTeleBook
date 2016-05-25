@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class BriefContact implements Serializable{
 
-    Long contactId;
+    Long rawContactId = 0l;
     String lookUpKey;  //此两个是主键
     String name;
     String number;
@@ -51,12 +51,12 @@ public class BriefContact implements Serializable{
         this.sortKey = sortKey;
     }
 
-    public Long getContactId() {
-        return contactId;
+    public Long getRawContactId() {
+        return rawContactId;
     }
 
-    public void setContactId(Long contactId) {
-        this.contactId = contactId;
+    public void setRawContactId(Long rawContactId) {
+        this.rawContactId = rawContactId;
     }
 
     public String getLookUpKey() {

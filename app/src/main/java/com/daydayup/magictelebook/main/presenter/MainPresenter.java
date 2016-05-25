@@ -1,13 +1,17 @@
 package com.daydayup.magictelebook.main.presenter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.daydayup.magictelebook.main.bean.BriefContact;
 import com.daydayup.magictelebook.main.bean.Contact;
 import com.daydayup.magictelebook.main.bean.Record;
+import com.daydayup.magictelebook.main.callback.DefaultListener;
 import com.daydayup.magictelebook.main.callback.OnBriefContactsInitListener;
 import com.daydayup.magictelebook.main.callback.OnRecordsInitListener;
+import com.daydayup.magictelebook.main.callback.OnSelectContactListener;
 import com.daydayup.magictelebook.main.model.IMainModel;
 import com.daydayup.magictelebook.main.model.MainModelImp;
 import com.daydayup.magictelebook.main.view.IMainView;
@@ -75,6 +79,36 @@ public class MainPresenter {
     }
     public void searchRecordsByAll(String searchStr,OnRecordsInitListener onRecordsInitListener){
         mainModel.searchRecordsByAll(searchStr,onRecordsInitListener);
+    }
+    //system
+    public void insertContactSys(BriefContact briefContact, DefaultListener defaultListener){
+        mainModel.insertContactSys(briefContact,defaultListener);
+    }
+    public void updateContactSys(BriefContact briefContact, DefaultListener defaultListener){
+        mainModel.updateContactSys(briefContact,defaultListener);
+    }
+    public void deleteContactSys(Long rawContactId,DefaultListener defaultListener){
+        mainModel.deleteContactSys(rawContactId,defaultListener);
+    }
+    //void selectContactSys(String number, OnSelectContactListener onSelectContactListener);
+
+    public void deleteRecordFromSys(String id,DefaultListener defaultListener){
+        mainModel.deleteRecordFromSys(id,defaultListener);
+    }
+
+    //sqliteDb
+    public void replaceContactFromSqlite(BriefContact briefContact, Bitmap bitmap, DefaultListener defaultListener){
+        mainModel.replaceContactFromSqlite(briefContact,bitmap,defaultListener);
+    }
+    public void deleteContactFromSqlite(BriefContact briefContact,DefaultListener defaultListener){
+        mainModel.deleteContactFromSqlite(briefContact,defaultListener);
+    }
+    public void selectContactFromSqlite(String number, OnSelectContactListener onSelectContactListener){
+        mainModel.selectContactFromSqlite(number,onSelectContactListener);
+    }
+
+    public long getRawContactId(String data_id){
+        return mainModel.getRawContactIDByNumber(data_id);
     }
 //    /*
 //    @param num:通话记录数量,offset:偏移量

@@ -22,10 +22,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RecordSearchAdapter extends BaseAdapter {
     private List<Record> mRecords;
     private LayoutInflater mInflater;
+    private int[] photeId;
 
     public  RecordSearchAdapter(Context context,List<Record> recordList){
         mRecords = recordList;
         mInflater = LayoutInflater.from(context);
+        photeId = new int[]{R.mipmap.touxiang,R.mipmap.touxiang1,R.mipmap.touxiang2,R.mipmap.touxiang3,R.mipmap.touxiang4,R.mipmap.touxiang5,R.mipmap.touxiang6,R.mipmap.touxiang7,R.mipmap.touxiang8,R.mipmap.touxiang9,R.mipmap.touxiang10,R.mipmap.touxiang11};
+
     }
 
     @Override
@@ -62,7 +65,7 @@ public class RecordSearchAdapter extends BaseAdapter {
         }
         viewHolder.NameView.setText(mRecords.get(position).getName());
         //TODO:
-        viewHolder.PersonImgView.setImageResource(R.mipmap.touxiang1);
+        viewHolder.PersonImgView.setImageResource(photeId[position%12]);
         viewHolder.TelnoView.setText(mRecords.get(position).getTelno());
         viewHolder.TypeView.setText(mRecords.get(position).getType());
         viewHolder.AreaView.setText(mRecords.get(position).getArea());

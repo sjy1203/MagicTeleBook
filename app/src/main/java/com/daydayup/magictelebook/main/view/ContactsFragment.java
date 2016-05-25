@@ -3,6 +3,7 @@ package com.daydayup.magictelebook.main.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.daydayup.magictelebook.main.adpter.ContactAdapter;
 import com.daydayup.magictelebook.main.bean.BriefContact;
 import com.daydayup.magictelebook.main.bean.Contact;
 import com.daydayup.magictelebook.main.callback.OnBriefContactsInitListener;
+import com.daydayup.magictelebook.main.callback.OnSelectContactListener;
 import com.daydayup.magictelebook.main.presenter.MainPresenter;
 import com.daydayup.magictelebook.util.L;
 import com.daydayup.magictelebook.util.T;
@@ -94,27 +96,53 @@ public class ContactsFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),ContactInfoMixActivity.class);
                 intent.putExtra(ContactInfoMixActivity.INTENT_STATUS,ContactInfoMixActivity.STATUS_EDIT);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
         initContacts();
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==1 && resultCode==1){
+            initContacts();
+        }
+    }
 
-    private void initContacts() {
+    public void initContacts() {
         MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).initBriefContacts(NUM, new OnBriefContactsInitListener() {
             @Override
             public void onLoadSuccess(List<BriefContact> contactList) {
                 mBlacks.clear();
                 mContacts.clear();
-                for (BriefContact briefContact:contactList){
+                for (final BriefContact briefContact:contactList){
                     L.d(briefContact.toString());
-                    if (briefContact.isBlack()){
-                        mBlacks.add(briefContact);
-                    }else{
-                        mContacts.add(briefContact);
-                    }
+                    //补全
+                    MainPresenter.getInstance(getActivity(), (IMainView) getActivity()).selectContactFromSqlite(briefContact.getNumber(), new OnSelectContactListener() {
+                        @Override
+                        public void onSuccess(BriefContact Contact, Bitmap bitmap) {
+                            briefContact.setArea(Contact.getArea());
+                            briefContact.setBirth(Contact.getBirth());
+                            briefContact.setBlack(Contact.isBlack());
+                            if (briefContact.isBlack()){
+                                mBlacks.add(briefContact);
+                            }else{
+                                mContacts.add(briefContact);
+                            }
+                        }
+
+                        @Override
+                        public void onFailed(String msg) {
+
+                            if (briefContact.isBlack()){
+                                mBlacks.add(briefContact);
+                            }else{
+                                mContacts.add(briefContact);
+                            }
+                        }
+                    });
+
                 }
                 mBlackAdapter.notifyDataSetChanged();
                 mContactAdapter.notifyDataSetChanged();

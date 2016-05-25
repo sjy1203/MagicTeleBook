@@ -14,11 +14,13 @@ import com.daydayup.magictelebook.main.callback.IContactViewHolderClicks;
 import com.daydayup.magictelebook.main.view.ContactInfoActivity;
 import com.daydayup.magictelebook.main.view.ContactInfoMixActivity;
 import com.daydayup.magictelebook.main.view.ContactShowFragment;
+import com.daydayup.magictelebook.main.view.MainActivity;
 import com.daydayup.magictelebook.util.L;
 import com.daydayup.magictelebook.weather.WeatherInfo;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Jay on 16/5/10.
@@ -28,11 +30,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     private List<BriefContact> contacts;
     private int setWidth;
     private Context mContext;
+    private int[] photeId;
+    private Random random;
 
     public ContactAdapter(List<BriefContact> contactList,int setWidth,Context context){
         this.contacts = contactList;
         this.setWidth = setWidth;
         this.mContext = context;
+        photeId = new int[]{R.mipmap.touxiang,R.mipmap.touxiang1,R.mipmap.touxiang2,R.mipmap.touxiang3,R.mipmap.touxiang4,R.mipmap.touxiang5,R.mipmap.touxiang6,R.mipmap.touxiang7,R.mipmap.touxiang8,R.mipmap.touxiang9,R.mipmap.touxiang10,R.mipmap.touxiang11};
+        random = new Random();
+
     }
     public List<BriefContact> getList(){
         return contacts;
@@ -53,7 +60,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
                 Intent intent = new Intent(mContext, ContactInfoMixActivity.class);
                 intent.putExtra(ContactShowFragment.KEY_BRIEFCONTACT,contactdata);
                 intent.putExtra(ContactInfoMixActivity.INTENT_STATUS,ContactInfoMixActivity.STATUS_SHOW);
-                mContext.startActivity(intent);
+                ((MainActivity)mContext).startActivityForResult(intent,1);
                 L.d(contacts.get(viewType).getName()+" cardview is clicked");
             }
         });
@@ -65,7 +72,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
         lp.width = 1*setWidth/3-32;
         lp.height = 1*setWidth/3-32;
         holder.PersonImgView.setLayoutParams(lp);
-        holder.PersonImgView.setImageResource(R.mipmap.touxiang);
+        holder.PersonImgView.setImageResource(photeId[position%12]);
         holder.NameView.setText(contacts.get(position).getName());
 
         String area = contacts.get(position).getArea();
@@ -86,6 +93,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
             temperature = getTemperature();
             weatherInfo.setTemperature(temperature);
         }
+        contacts.get(position).setWeatherInfo(weatherInfo);
         holder.InfoView.setText(String.format("%s %s %s",area,weather,temperature));
     }
 
@@ -98,7 +106,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactViewHolder> {
     }
 
     private String getArea() {
-        return "湖北武汉";
+        return "武汉";
     }
 
     @Override

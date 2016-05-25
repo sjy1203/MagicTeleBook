@@ -1,5 +1,6 @@
 package com.daydayup.magictelebook.main.view;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -52,6 +53,12 @@ public class MainActivity extends BaseAcitivity implements IMainView{
         return R.layout.activity_main;
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode==1&&resultCode==1){
+//            ((ContactsFragment)fragmentList.get(1)).initContacts();
+//        }
+//    }
 
     @Override
     public RecordAdapter getRecordAdapter() {

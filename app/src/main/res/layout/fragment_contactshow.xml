@@ -24,7 +24,7 @@
                 android:id="@+id/person_telno"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="18508259573"
+
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:layout_alignParentTop="true"
@@ -76,7 +76,7 @@
                 android:id="@+id/person_area"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="湖北武汉"
+
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:layout_alignParentTop="true"
@@ -110,7 +110,7 @@
                 android:id="@+id/person_birth"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="5月21日"
+
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:layout_alignParentTop="true"

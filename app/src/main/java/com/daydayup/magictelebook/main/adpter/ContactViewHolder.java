@@ -18,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     CircleImageView PersonImgView;
-    TextView NameView;
+    MarqueeText NameView;
     MarqueeText InfoView;
     IContactViewHolderClicks mListener;
     CardView cardView;
@@ -27,12 +27,13 @@ public class ContactViewHolder extends RecyclerView.ViewHolder implements View.O
     public ContactViewHolder(View itemView, IContactViewHolderClicks listener) {
         super(itemView);
         PersonImgView = (CircleImageView) itemView.findViewById(R.id.person_img);
-        NameView = (TextView) itemView.findViewById(R.id.person_name);
+        NameView = (MarqueeText) itemView.findViewById(R.id.person_name);
         InfoView = (MarqueeText) itemView.findViewById(R.id.weather);
         mListener = listener;
         cardView = (CardView) itemView.findViewById(R.id.contact_card_view);
         cardView.setOnClickListener(this);
         personTv = (TextView) itemView.findViewById(R.id.person_tv);
+
     }
 
     @Override
